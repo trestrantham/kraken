@@ -27,3 +27,10 @@ import_config "#{Mix.env}.exs"
 config :phoenix, :generators,
   migration: true,
   binary_id: false
+
+config :guardian, Guardian,
+  issuer: "Sync",
+  ttl: { 30, :days },
+  verify_issuer: true,
+  secret_key: "IIR4Ghbcu-4%ElRK1X)9$onCcA12c04@@f8S3C^sHJc!D7w##L1%i301w20q6&RG",
+  serializer: Sync.Authorization.GuardianSerializer

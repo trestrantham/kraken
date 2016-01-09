@@ -50,13 +50,14 @@ defmodule Sync.Mixfile do
   defp deps do
     [
       {:comeonin, "~> 1.6"},
+      {:cowboy, "~> 1.0"},
+      {:gettext, "~> 0.9"},
+      {:guardian, "~> 0.9.0"},
       {:phoenix, "~> 1.1.1"},
       {:phoenix_ecto, "~> 2.0"},
-      {:postgrex, ">= 0.0.0"},
       {:phoenix_html, "~> 2.3"},
       {:phoenix_live_reload, "~> 1.0", only: :dev},
-      {:gettext, "~> 0.9"},
-      {:cowboy, "~> 1.0"}
+      {:postgrex, ">= 0.0.0"}
     ]
   end
 
