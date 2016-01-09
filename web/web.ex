@@ -51,6 +51,7 @@ defmodule Sync.Web do
 
       import Sync.Router.Helpers
       import Sync.ErrorHelpers
+      import Sync.SharedHelpers
       import Sync.Gettext
     end
   end
