@@ -19,4 +19,10 @@ defmodule Sync.SessionController do
         |> render "new.html", email: email
     end  
   end
+
+  def destroy(conn, _params) do
+    conn
+    |> Guardian.Plug.sign_out
+    |> redirect(to: session_path(conn, :new))
+  end
 end
