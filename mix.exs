@@ -24,7 +24,8 @@ defmodule Sync.Mixfile do
   end
 
   def applications(env) when env in [:test] do
-    applications(:default) ++ [:ex_machina]
+    # applications(:default) ++ [:ex_machina]
+    applications(:default)
   end
 
   def applications(_) do
@@ -53,7 +54,7 @@ defmodule Sync.Mixfile do
       {:cowboy, "~> 1.0"},
       {:gettext, "~> 0.9"},
       {:guardian, "~> 0.9.0"},
-      {:phoenix, "~> 1.1.1"},
+      {:phoenix, "~> 1.1.2"},
       {:phoenix_ecto, "~> 2.0"},
       {:phoenix_html, "~> 2.3"},
       {:phoenix_live_reload, "~> 1.0", only: :dev},
