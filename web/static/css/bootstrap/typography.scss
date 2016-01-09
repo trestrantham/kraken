@@ -1,0 +1,111 @@
+@import "../base/colors";
+
+/**
+ * typography
+ */
+
+// HEADINGS
+// ------------------
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight:300;
+    color:$grey-900;
+    margin-bottom:20px;
+    margin-top:30px;
+}
+
+h1{
+    font-size:32px;
+    line-height:32px;
+}
+
+h2{
+    font-size:28px;
+    line-height:28px;
+}
+
+h3{
+    font-size:24px;
+    line-height:24px;
+}
+
+h4{
+    font-size:20px;
+    line-height:20px;
+}
+
+h5{
+    font-size:16px;
+    line-height:16px;
+}
+
+h6{
+    font-size:14px;
+    line-height:14px;
+}
+
+// LINKS
+// ------------------
+a,
+a:hover{
+    color:$light-blue;
+    text-decoration:none;
+}
+
+
+// PARAGRAPH
+// ------------------
+p{
+    margin:0 0 18px;
+}
+
+
+// FONT-WEIGHT
+// ------------------
+strong{
+    font-weight:500;
+    color:$grey-700;
+}
+
+
+// LISTS
+// ------------------
+ul,
+ol{
+    padding-left:18px;
+    
+    li{
+        padding:2px 0;
+    }
+    
+    ul,
+    ol{
+        padding-left:25px;
+        padding-top:2px;
+    }
+}
+
+
+// BLOQUOTES
+// ------------------
+blockquote{
+    
+    &.demo{
+        margin:26px 0;
+    }
+    
+    border-left:4px solid $cyan;
+    
+    p{
+        font-style:italic;
+    }
+    
+    footer{
+        color:$grey-500;
+    }
+    
+}

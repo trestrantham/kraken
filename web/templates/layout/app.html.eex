@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Sync</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:700,500,400,200,100,100italic,300,300italic" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
+  </head>
+  <body>
+    <nav class="navbar bg-deep-purple-900 text-normal navbar-fixed-top">
+      <ul class="nav navbar-nav">
+        <a class="navbar-brand" href="#">Sync</a>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Dashboard</a>
+        </li>
+        <li>
+          <a class="nav-link" href="#">Connection</a>
+          <%# <%= link "Connections", to: auth_path(@conn, :login, "identity"), class: "nav-link"%1> %>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav pull-xs-right">
+        <li>
+          <a class="nav-link" href="#">Sign out</a>
+          <%# <%= link "Log out", to: auth_path(@conn, :logout), method: :delete, class: "btn btn-danger-outline" %1> %>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="content-wrapper">
+      <div class="container-fluid">
+        <%= get_flash(@conn, :info) %>
+        <%= get_flash(@conn, :error) %>
+
+        <%# <%= render "navigation.html", current_user: @current_user, conn: @conn %1> %>
+
+        <%= render @view_module, @view_template, assigns %>
+      </div>
+    </div>
+
+    <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
+  </body>
+</html>

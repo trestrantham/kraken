@@ -3,9 +3,24 @@ exports.config = {
   files: {
     javascripts: {
       joinTo: "js/app.js",
+      order: {
+        before: [
+          "web/static/vendor/js/jquery-2.1.4.min.js",
+          "web/static/vendor/js/jquery.nicescroll.min.js",
+          "web/static/vendor/js/tether.min.js",
+          "web/static/vendor/js/bootstrap.min.js",
+          "web/static/vendor/js/bootstrap-select.min.js",
+        ]
+      }
     },
     stylesheets: {
       joinTo: "css/app.css",
+      order: {
+        before: [
+          "web/static/vendor/css/bootstrap.min.css",
+          "web/static/vendor/css/bootstrap-select.min.css",
+          "web/static/vendor/css/animate.min.css",
+        ]
       }
     },
     templates: {

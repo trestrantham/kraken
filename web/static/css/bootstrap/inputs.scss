@@ -1,0 +1,120 @@
+@import "../base/colors";
+
+.form-group {
+  &.has-success .form-control {
+    border-bottom:2px solid $green-400;
+    color: $green-400;
+
+    .placeholder::-webkit-input-placeholder,
+    .placeholder::-moz-placeholder,
+    .placeholder:ms-input-placeholder {
+      color: $green-400;
+    }
+  }
+
+  &.has-error .form-control {
+    border-bottom:2px solid $red-400;
+    color: $red-400;
+
+    .placeholder::-webkit-input-placeholder,
+    .placeholder::-moz-placeholder,
+    .placeholder:ms-input-placeholder {
+      color: $red-400;
+    }
+  }
+
+  &.has-warning .form-control {
+    border-bottom:2px solid $orange-400;
+    color: $orange-400;
+
+    .placeholder::-webkit-input-placeholder,
+    .placeholder::-moz-placeholder,
+    .placeholder:ms-input-placeholder {
+      color: $orange-400;
+    }
+  }
+
+  small {
+    display: inline-block;
+
+    &:first-letter {
+      text-transform: capitalize;
+    }
+
+    &.error {
+      color: $red-400;
+    }
+
+    &.hint {
+      color: $grey-400;
+    }
+  }
+}
+
+.form-control {
+  &:not(.bs) {
+    background:none;
+    border:none;
+    border-bottom:2px solid $grey-200;
+    border-radius:0;
+    box-shadow:none;
+    color:$grey-500;
+    font-weight:400;
+    padding:0 10px 2px 0;
+    height:auto;
+    resize:none;
+
+    .placeholder::-webkit-input-placeholder,
+    .placeholder::-moz-placeholder,
+    .placeholder:ms-input-placeholder {
+      color: $grey-400;
+      font-weight: 300;
+      letter-spacing: 1px;
+    }
+
+
+    &.alt{
+      border-bottom:2px solid $cyan-400;
+      color: $cyan-400;
+
+      .placeholder::-webkit-input-placeholder,
+      .placeholder::-moz-placeholder,
+      .placeholder:ms-input-placeholder {
+        color: $cyan-400;
+      }
+    }
+
+    &[disabled]{
+      background:none;
+      border-bottom:2px dotted $grey-400;
+    }
+
+    &:focus{
+      box-shadow:none !important;
+    }
+
+    &.bootstrap-select{
+      padding:0;
+    }
+  }
+}
+
+.input-wrapper {
+  position: relative;
+
+  &:after{
+    content: "";
+    height: 2px;
+    position: absolute;
+    width: 100%;
+    left: 0;
+    bottom: 0;
+    transition: all 250ms ease-in-out;
+    transform: scale(0);
+    background: $indigo;
+  }
+
+  &.focus:after {
+    transform:scale(1);    
+  }
+}

@@ -1,0 +1,113 @@
+@import "../base/colors";
+
+.btn {
+  box-shadow:0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.12);
+  border-radius:2px;
+  font-weight:300;
+  text-transform:uppercase;
+  border:none;
+  letter-spacing:0;
+
+  &.btn-default {
+    background-color: $grey-50;
+
+    &:hover,
+    &:focus,
+    &:active {
+      background-color: $grey-50;
+    }
+
+    &:active {
+      &:focus {
+        background-color: $grey-50;    
+      }
+    }
+  }
+
+  &.btn-primary {
+    &,
+    &:hover {
+      background-color: $indigo;
+    }
+
+    &:focus,
+    &:active {
+      background-color: $indigo-900;
+    }
+
+    &:active {
+      &:focus {
+        background-color: $indigo-900;    
+      }
+    }
+  }
+
+  &.btn-success {
+    background-color: $green-400;
+
+    &:hover,
+    &:focus,
+    &:active {
+      background-color: $green-400;
+    }
+
+    &:active {
+      &:focus {
+        background-color: $green-400;    
+      }
+    }
+  }
+
+  &.btn-info {
+    background-color: $blue-400;
+
+    &:hover,
+    &:focus,
+    &:active {
+      background-color: $blue-400;
+    }
+
+    &:active {
+      &:focus {
+        background-color: $blue-400;    
+      }
+    }
+  }
+
+  &.btn-warning {
+    background-color: $orange-400;
+
+    &:hover,
+    &:focus,
+    &:active {
+      background-color: $orange-400;
+    }
+
+    &:active {
+      &:focus {
+        background-color: $orange-400;    
+      }
+    }
+  }
+
+  &.btn-danger {
+    background-color: $red-400;
+
+    &:hover,
+    &:focus,
+    &:active {
+      background-color: $red-400;
+    }
+
+    &:active {
+      &:focus {
+        background-color: $red-400;    
+      }
+    }
+  }
+
+  &:active,
+  &:focus {
+    box-shadow:0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.12);
+  }
+}

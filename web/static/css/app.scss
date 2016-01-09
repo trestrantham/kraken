@@ -1,0 +1,33 @@
+@import "base/colors";
+
+body {
+  font-family: "Roboto", sans-serif;
+  background: $grey-200;
+  color: $grey-700;
+  font-weight: 300;
+  font-size: 14px;
+}
+
+a,
+a:hover {
+  color: $indigo !important;
+}
+
+.content-wrapper {
+  position: relative;
+  padding: 40px 0 20px;
+}
+@media (min-width: 768px) {
+  .content-wrapper {
+    padding: 40px 25px 20px;
+  }
+}
+
+// .navbar {
+//   .navbar-nav {
+//     .nav-link,
+//     a.btn {
+//       transition: color 100ms ease-in-out;
+//     }
+//   }
+// }

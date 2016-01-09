@@ -1,0 +1,23 @@
+.auth-form {
+  padding: 35px;
+  background: #fff;
+
+  .form-group {
+    margin-bottom: 25px;
+
+    input {
+      font-size: 14px;
+    }
+  }
+
+  [type="submit"] {
+    margin-top: 30px;
+    font-size: 18px;
+  }
+}
+@media (min-width: 768px) {
+  .auth-form-wrapper {
+    margin: auto;
+    width: 500px;
+  }
+}

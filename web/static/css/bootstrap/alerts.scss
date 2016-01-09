@@ -1,0 +1,43 @@
+@import "../base/colors";
+
+.alert {
+  border-radius: 0;
+  border: none;
+  padding: 15px 35px;
+
+  &.alert-success {
+    background:$green-100;
+    color:$green;
+
+    strong{
+      color:$green;
+    }
+  }
+
+  &.alert-info {
+    background:$blue-100;
+    color:$blue;
+
+    strong{
+      color:$blue;
+    }
+  }
+
+  &.alert-warning {
+    background:$amber-100;
+    color:$orange;
+
+    strong{
+      color:$orange;
+    }
+  }
+
+  &.alert-danger {
+    background:$red-100;
+    color:$red-400;
+
+    strong{
+      color:$red-400;
+    }
+  }
+}

@@ -13,5 +13,8 @@ defmodule Sync.Router do
     pipe_through :browser # Use the default browser stack
 
     get  "/", PageController, :index
+    get  "/dashboard", DashboardController, :index
+    get  "/signup", UserController, :new
+    post "/signup", UserController, :create
   end
 end
