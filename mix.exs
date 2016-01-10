@@ -24,7 +24,6 @@ defmodule Sync.Mixfile do
   end
 
   def applications(env) when env in [:test] do
-    # applications(:default) ++ [:ex_machina]
     applications(:default)
   end
 

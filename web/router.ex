@@ -17,7 +17,9 @@ defmodule Sync.Router do
   scope "/", Sync do
     pipe_through [:browser, :browser_auth]
 
-    get  "/", PageController, :index
+    # get  "/", PageController, :index
+    get  "/",  SessionController, :new
+
     get  "/dashboard", DashboardController, :index
     get  "/signup", UserController, :new
     post "/signup", UserController, :create
