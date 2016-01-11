@@ -20,12 +20,14 @@ defmodule Kraken.Router do
     # get  "/", PageController, :index
     get  "/",  SessionController, :new
 
-    get  "/dashboard", DashboardController, :index
     get  "/signup", UserController, :new
     post "/signup", UserController, :create
     get  "/login",  SessionController, :new
     post "/login",  SessionController, :create
     delete "/logout",  SessionController, :destroy
+
+    get  "/dashboard", DashboardController, :index
+    get  "/connections", ConnectionController, :index
   end
 
   scope "/connection", Kraken do
