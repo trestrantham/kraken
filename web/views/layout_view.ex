@@ -1,3 +1,3 @@
-defmodule Sync.LayoutView do
-  use Sync.Web, :view
+defmodule Kraken.LayoutView do
+  use Kraken.Web, :view
 end

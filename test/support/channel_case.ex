@@ -1,4 +1,4 @@
-defmodule Sync.ChannelCase do
+defmodule Kraken.ChannelCase do
   @moduledoc """
   This module defines the test case to be used by
   channel tests.
@@ -20,19 +20,19 @@ defmodule Sync.ChannelCase do
       # Import conveniences for testing with channels
       use Phoenix.ChannelTest
 
-      alias Sync.Repo
+      alias Kraken.Repo
       import Ecto.Model
       import Ecto.Query, only: [from: 2]
 
 
       # The default endpoint for testing
-      @endpoint Sync.Endpoint
+      @endpoint Kraken.Endpoint
     end
   end
 
   setup tags do
     unless tags[:async] do
-      Ecto.Adapters.SQL.restart_test_transaction(Sync.Repo, [])
+      Ecto.Adapters.SQL.restart_test_transaction(Kraken.Repo, [])
     end
 
     :ok

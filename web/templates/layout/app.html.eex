@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Sync</title>
+    <title>Kraken</title>
 
     <link href="https://fonts.googleapis.com/css?family=Roboto:700,500,400,200,100,100italic,300,300italic" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -14,7 +14,7 @@
   <body>
     <nav class="navbar bg-deep-purple-900 text-normal navbar-fixed-top">
       <ul class="nav navbar-nav">
-        <a class="navbar-brand" href="#">Sync</a>
+        <a class="navbar-brand" href="#">Kraken</a>
         <li class="nav-item">
           <a class="nav-link" href="#">Dashboard</a>
         </li>

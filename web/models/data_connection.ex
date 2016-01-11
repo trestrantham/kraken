@@ -1,5 +1,5 @@
-defmodule Sync.DataConnection do
-  use Sync.Web, :model
+defmodule Kraken.DataConnection do
+  use Kraken.Web, :model
 
   schema "data_connections" do
     field :provider, :string
@@ -10,7 +10,7 @@ defmodule Sync.DataConnection do
     field :password, :string, virtual: true
     field :password_confirmation, :string, virtual: true
 
-    belongs_to :user, Sync.User
+    belongs_to :user, Kraken.User
 
     timestamps
   end

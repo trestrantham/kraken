@@ -1,8 +1,8 @@
-defmodule Sync.Mixfile do
+defmodule Kraken.Mixfile do
   use Mix.Project
 
   def project do
-    [app: :sync,
+    [app: :kraken,
      version: "0.0.1",
      elixir: "~> 1.0",
      elixirc_paths: elixirc_paths(Mix.env),
@@ -18,7 +18,7 @@ defmodule Sync.Mixfile do
   # Type `mix help compile.app` for more information.
   def application do
     [
-      mod: {Sync, []},
+      mod: {Kraken, []},
       applications: applications(Mix.env)
     ]
   end

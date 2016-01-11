@@ -1,3 +1,3 @@
-defmodule Sync.PageViewTest do
-  use Sync.ConnCase, async: true
+defmodule Kraken.PageViewTest do
+  use Kraken.ConnCase, async: true
 end

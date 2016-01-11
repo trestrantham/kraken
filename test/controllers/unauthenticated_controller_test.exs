@@ -1,14 +1,14 @@
-defmodule Sync.UnauthenticatedControllerTest do
-  use Sync.ConnCase
+defmodule Kraken.UnauthenticatedControllerTest do
+  use Kraken.ConnCase
 
   test "GET /", %{conn: conn} do
     conn = get conn, "/"
-    assert html_response(conn, 200) =~ "Log in to Sync"
+    assert html_response(conn, 200) =~ "Log in to Kraken"
   end
 
   test "GET /login", %{conn: conn} do
     conn = get conn, "/login"
-    assert html_response(conn, 200) =~ "Log in to Sync"
+    assert html_response(conn, 200) =~ "Log in to Kraken"
   end
 
   test "DELETE /logout", %{conn: conn} do

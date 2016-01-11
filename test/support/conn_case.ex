@@ -1,4 +1,4 @@
-defmodule Sync.ConnCase do
+defmodule Kraken.ConnCase do
   @moduledoc """
   This module defines the test case to be used by
   tests that require setting up a connection.
@@ -20,21 +20,21 @@ defmodule Sync.ConnCase do
       # Import conveniences for testing with connections
       use Phoenix.ConnTest
 
-      alias Sync.Repo
+      alias Kraken.Repo
       import Ecto.Model
       import Ecto.Query, only: [from: 2]
 
-      import Sync.Router.Helpers
+      import Kraken.Router.Helpers
 
       # The default endpoint for testing
-      @endpoint Sync.Endpoint
+      @endpoint Kraken.Endpoint
 
       # We need a way to get into the connection to login a user
       # We need to use the bypass_through to fire the plugs in the router
       # and get the session fetched.
       def guardian_login(user, token \\ :token, opts \\ []) do
         conn()
-        |> bypass_through(Sync.Router, [:browser])
+        |> bypass_through(Kraken.Router, [:browser])
         |> get("/")
         |> Guardian.Plug.sign_in(user, token, opts)
         |> send_resp(200, "Flush the session yo")
@@ -45,7 +45,7 @@ defmodule Sync.ConnCase do
 
   setup tags do
     unless tags[:async] do
-      Ecto.Adapters.SQL.restart_test_transaction(Sync.Repo, [])
+      Ecto.Adapters.SQL.restart_test_transaction(Kraken.Repo, [])
     end
 
     {:ok, conn: Phoenix.ConnTest.conn()}

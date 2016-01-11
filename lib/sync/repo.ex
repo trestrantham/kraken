@@ -1,3 +1,3 @@
-defmodule Sync.Repo do
-  use Ecto.Repo, otp_app: :sync
+defmodule Kraken.Repo do
+  use Ecto.Repo, otp_app: :kraken
 end

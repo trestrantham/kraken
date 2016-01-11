@@ -1,4 +1,4 @@
-defmodule Sync.Repo.Migrations.CreateUsers do
+defmodule Kraken.Repo.Migrations.CreateUsers do
   use Ecto.Migration
 
   def change do

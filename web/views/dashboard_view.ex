@@ -1,3 +1,3 @@
-defmodule Sync.DashboardView do
-  use Sync.Web, :view
+defmodule Kraken.DashboardView do
+  use Kraken.Web, :view
 end

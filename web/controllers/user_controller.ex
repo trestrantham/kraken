@@ -1,7 +1,7 @@
-defmodule Sync.UserController do
-  use Sync.Web, :controller
+defmodule Kraken.UserController do
+  use Kraken.Web, :controller
   plug :put_layout, "chromeless.html"
-  alias Sync.User
+  alias Kraken.User
 
   def new(conn, _params) do
     changeset = User.changeset(%User{})

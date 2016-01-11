@@ -2,7 +2,7 @@ use Mix.Config
 
 # We don't run a server during test. If one is required,
 # you can enable the server option below.
-config :sync, Sync.Endpoint,
+config :kraken, Kraken.Endpoint,
   http: [port: 4001],
   server: false
 
@@ -10,8 +10,8 @@ config :sync, Sync.Endpoint,
 config :logger, level: :warn
 
 # Configure your database
-config :sync, Sync.Repo,
+config :kraken, Kraken.Repo,
   adapter: Ecto.Adapters.Postgres,
-  database: "sync_test",
+  database: "kraken_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox

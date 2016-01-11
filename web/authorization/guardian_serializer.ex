@@ -1,8 +1,8 @@
-defmodule Sync.Authorization.GuardianSerializer do
+defmodule Kraken.Authorization.GuardianSerializer do
   @behaviour Guardian.Serializer
 
-  alias Sync.Repo
-  alias Sync.User
+  alias Kraken.Repo
+  alias Kraken.User
 
   def for_token(user = %User{}), do: { :ok, "User:#{user.id}" }
   def for_token(_), do: { :error, "Unknown resource type" }

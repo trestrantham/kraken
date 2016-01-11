@@ -1,5 +1,5 @@
-defmodule Sync.DashboardController do
-  use Sync.Web, :controller
+defmodule Kraken.DashboardController do
+  use Kraken.Web, :controller
 
   plug Guardian.Plug.EnsureAuthenticated, handler: __MODULE__
 

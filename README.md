@@ -1,4 +1,4 @@
-# Sync
+# Kraken
 
 To start your Phoenix app:
 

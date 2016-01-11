@@ -1,7 +1,7 @@
-defmodule Sync.SharedHelpers do
+defmodule Kraken.SharedHelpers do
   import Phoenix.Controller, only: [get_csrf_token: 0, get_flash: 1, get_flash: 2, view_module: 1]
   import Phoenix.HTML
-  import Sync.ErrorHelpers
+  import Kraken.ErrorHelpers
 
   def auth_error_class(errors \\ [], field) do
     if errors != [] && Dict.has_key?(errors, field) do

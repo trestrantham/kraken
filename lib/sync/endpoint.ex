@@ -1,14 +1,14 @@
-defmodule Sync.Endpoint do
-  use Phoenix.Endpoint, otp_app: :sync
+defmodule Kraken.Endpoint do
+  use Phoenix.Endpoint, otp_app: :kraken
 
-  socket "/socket", Sync.UserSocket
+  socket "/socket", Kraken.UserSocket
 
   # Serve at "/" the static files from "priv/static" directory.
   #
   # You should set gzip to true if you are running phoenix.digest
   # when deploying your static files in production.
   plug Plug.Static,
-    at: "/", from: :sync, gzip: false,
+    at: "/", from: :kraken, gzip: false,
     only: ~w(css fonts images js favicon.ico robots.txt)
 
   # Code reloading can be explicitly enabled under the
@@ -32,8 +32,8 @@ defmodule Sync.Endpoint do
 
   plug Plug.Session,
     store: :cookie,
-    key: "_sync_key",
+    key: "_kraken_key",
     signing_salt: "9mum20Wg"
 
-  plug Sync.Router
+  plug Kraken.Router
 end

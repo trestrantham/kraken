@@ -1,4 +1,4 @@
-defmodule Sync.Repo.Migrations.CreateDataConnections do
+defmodule Kraken.Repo.Migrations.CreateDataConnections do
   use Ecto.Migration
 
   def change do

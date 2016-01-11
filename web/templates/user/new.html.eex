@@ -1,5 +1,5 @@
 <div class="card">
-  <h1 class="card-title">Create an account for Sync</h1>
+  <h1 class="card-title">Create an account for Kraken</h1>
   <div class="card-content">
     <%= form_for @changeset, user_path(@conn, :create), [class: "auth-form"], fn f -> %>
       <div class="form-group<%= auth_error_class(f.errors, :name) %>">

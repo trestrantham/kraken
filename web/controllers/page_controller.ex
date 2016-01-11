@@ -1,5 +1,5 @@
-defmodule Sync.PageController do
-  use Sync.Web, :controller
+defmodule Kraken.PageController do
+  use Kraken.Web, :controller
 
   def index(conn, _params) do
     render conn, "index.html"

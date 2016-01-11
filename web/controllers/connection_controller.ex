@@ -1,4 +1,4 @@
-defmodule Sync.ConnectionController do
-  use Sync.Web, :controller
+defmodule Kraken.ConnectionController do
+  use Kraken.Web, :controller
   plug Ueberauth
 end

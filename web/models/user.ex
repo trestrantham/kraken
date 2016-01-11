@@ -1,5 +1,5 @@
-defmodule Sync.User do
-  use Sync.Web, :model
+defmodule Kraken.User do
+  use Kraken.Web, :model
 
   schema "users" do
     field :name, :string

@@ -1,6 +1,6 @@
-defmodule Sync.Auth do
-  alias Sync.User
-  alias Sync.Repo
+defmodule Kraken.Auth do
+  alias Kraken.User
+  alias Kraken.Repo
   import Ecto.Query, only: [from: 1, from: 2]
 
   def validate_email_and_password(email, password) do

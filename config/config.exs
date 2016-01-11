@@ -6,12 +6,12 @@
 use Mix.Config
 
 # Configures the endpoint
-config :sync, Sync.Endpoint,
+config :kraken, Kraken.Endpoint,
   url: [host: "localhost"],
   root: Path.dirname(__DIR__),
   secret_key_base: "SKdi7uJ6I40Waja9LluRBOJ1/MOL6NjVRaYhGdtV+0loC1MgpB/f3OPPBgxhfZb8",
   render_errors: [accepts: ~w(html json)],
-  pubsub: [name: Sync.PubSub,
+  pubsub: [name: Kraken.PubSub,
            adapter: Phoenix.PubSub.PG2]
 
 # Configures Elixir's Logger
@@ -29,11 +29,11 @@ config :phoenix, :generators,
   binary_id: false
 
 config :guardian, Guardian,
-  issuer: "Sync",
+  issuer: "Kraken",
   ttl: { 30, :days },
   verify_issuer: true,
   secret_key: "IIR4Ghbcu-4%ElRK1X)9$onCcA12c04@@f8S3C^sHJc!D7w##L1%i301w20q6&RG",
-  serializer: Sync.Authorization.GuardianSerializer
+  serializer: Kraken.Authorization.GuardianSerializer
 
 config :ueberauth, Ueberauth,
   base_path: "/connection",

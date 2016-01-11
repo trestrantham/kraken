@@ -1,14 +1,14 @@
-defmodule Sync.SessionController do
-  use Sync.Web, :controller
+defmodule Kraken.SessionController do
+  use Kraken.Web, :controller
   plug :put_layout, "chromeless.html"
-  alias Sync.User
+  alias Kraken.User
 
   def new(conn, _params) do
     render conn, "new.html", email: ""
   end
 
   def create(conn, %{"session" => %{"email" => email, "password" => password}}) do
-    case Sync.Auth.validate_email_and_password(email, password) do
+    case Kraken.Auth.validate_email_and_password(email, password) do
       {:ok, user} ->
         conn
         |> Guardian.Plug.sign_in(user)

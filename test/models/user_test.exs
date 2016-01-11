@@ -1,7 +1,7 @@
-defmodule Sync.UserTest do
-  use Sync.ModelCase
+defmodule Kraken.UserTest do
+  use Kraken.ModelCase
 
-  alias Sync.User
+  alias Kraken.User
 
   test "changeset with valid attributes" do
     changeset = User.changeset(

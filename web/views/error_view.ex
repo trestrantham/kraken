@@ -1,5 +1,5 @@
-defmodule Sync.ErrorView do
-  use Sync.Web, :view
+defmodule Kraken.ErrorView do
+  use Kraken.Web, :view
 
   def render("404.html", _assigns) do
     "Page not found"

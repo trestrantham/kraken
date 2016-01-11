@@ -1,5 +1,5 @@
-defmodule Sync.Router do
-  use Sync.Web, :router
+defmodule Kraken.Router do
+  use Kraken.Web, :router
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -14,7 +14,7 @@ defmodule Sync.Router do
     plug Guardian.Plug.LoadResource
   end  
 
-  scope "/", Sync do
+  scope "/", Kraken do
     pipe_through [:browser, :browser_auth]
 
     # get  "/", PageController, :index
@@ -28,7 +28,7 @@ defmodule Sync.Router do
     delete "/logout",  SessionController, :destroy
   end
 
-  scope "/connection", Sync do
+  scope "/connection", Kraken do
     pipe_through :browser
 
     get "/:provider", ConnectionController, :request

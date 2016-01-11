@@ -1,7 +1,7 @@
-defmodule Sync.DataConnectionTest do
-  use Sync.ModelCase
+defmodule Kraken.DataConnectionTest do
+  use Kraken.ModelCase
 
-  alias Sync.DataConnection
+  alias Kraken.DataConnection
 
   @valid_attrs %{provider: "some content", uid: "some content", user_id: 42, token: "some token"}
   @invalid_attrs %{}

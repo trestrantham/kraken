@@ -1,12 +1,12 @@
-defmodule Sync.Web do
+defmodule Kraken.Web do
   @moduledoc """
   A module that keeps using definitions for controllers,
   views and so on.
 
   This can be used in your application as:
 
-      use Sync.Web, :controller
-      use Sync.Web, :view
+      use Kraken.Web, :controller
+      use Kraken.Web, :view
 
   The definitions below will be executed for every view,
   controller, etc, so keep them short and clean, focused
@@ -30,12 +30,12 @@ defmodule Sync.Web do
     quote do
       use Phoenix.Controller
 
-      alias Sync.Repo
+      alias Kraken.Repo
       import Ecto
       import Ecto.Query, only: [from: 1, from: 2]
 
-      import Sync.Router.Helpers
-      import Sync.Gettext
+      import Kraken.Router.Helpers
+      import Kraken.Gettext
     end
   end
 
@@ -49,10 +49,10 @@ defmodule Sync.Web do
       # Use all HTML functionality (forms, tags, etc)
       use Phoenix.HTML
 
-      import Sync.Router.Helpers
-      import Sync.ErrorHelpers
-      import Sync.SharedHelpers
-      import Sync.Gettext
+      import Kraken.Router.Helpers
+      import Kraken.ErrorHelpers
+      import Kraken.SharedHelpers
+      import Kraken.Gettext
     end
   end
 
@@ -66,10 +66,10 @@ defmodule Sync.Web do
     quote do
       use Phoenix.Channel
 
-      alias Sync.Repo
+      alias Kraken.Repo
       import Ecto
       import Ecto.Query, only: [from: 1, from: 2]
-      import Sync.Gettext
+      import Kraken.Gettext
     end
   end
 

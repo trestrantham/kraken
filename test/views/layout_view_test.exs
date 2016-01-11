@@ -1,3 +1,3 @@
-defmodule Sync.LayoutViewTest do
-  use Sync.ConnCase, async: true
+defmodule Kraken.LayoutViewTest do
+  use Kraken.ConnCase, async: true
 end
