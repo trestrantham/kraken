@@ -36,7 +36,8 @@ defmodule Sync.Mixfile do
       :phoenix,
       :phoenix_ecto,
       :phoenix_html,
-      :postgrex
+      :postgrex,
+      :ueberauth
     ]
   end
 
@@ -57,7 +58,8 @@ defmodule Sync.Mixfile do
       {:phoenix_ecto, "~> 2.0"},
       {:phoenix_html, "~> 2.3"},
       {:phoenix_live_reload, "~> 1.0", only: :dev},
-      {:postgrex, ">= 0.0.0"}
+      {:postgrex, ">= 0.0.0"},
+      {:ueberauth, "~> 0.2"}
     ]
   end
 

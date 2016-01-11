@@ -34,3 +34,13 @@ config :guardian, Guardian,
   verify_issuer: true,
   secret_key: "IIR4Ghbcu-4%ElRK1X)9$onCcA12c04@@f8S3C^sHJc!D7w##L1%i301w20q6&RG",
   serializer: Sync.Authorization.GuardianSerializer
+
+config :ueberauth, Ueberauth,
+  base_path: "/connection",
+  providers: [
+    fitbit: {Ueberauth.Strategy.Fitbit, []},
+  ]
+
+config :ueberauth, Ueberauth.Strategy.Fitbit,
+  consumer_key: System.get_env("FITBIT_CLIENT_ID"),
+  consumer_secret: System.get_env("FITBIT_CLIENT_SECRET")

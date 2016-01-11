@@ -27,4 +27,11 @@ defmodule Sync.Router do
     post "/login",  SessionController, :create
     delete "/logout",  SessionController, :destroy
   end
+
+  scope "/connection", Sync do
+    pipe_through :browser
+
+    get "/:provider", ConnectionController, :request
+    get "/:provider/callback", ConnectionController, :callback
+  end
 end
