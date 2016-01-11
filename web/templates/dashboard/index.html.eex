@@ -9,5 +9,3 @@
 Dashboard index
 
 <%= @current_user.email %>
-
-<%= link "Log out", to: session_path(@conn, :destroy), method: :delete, class: "btn btn-danger btn-xs" %>

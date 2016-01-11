@@ -12,27 +12,27 @@
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
   </head>
   <body>
-    <nav class="navbar bg-deep-purple-900 text-normal navbar-fixed-top">
-      <ul class="nav navbar-nav">
-        <a class="navbar-brand" href="#">Kraken</a>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Dashboard</a>
-        </li>
-        <li>
-          <a class="nav-link" href="#">Connection</a>
-          <%# <%= link "Connections", to: auth_path(@conn, :login, "identity"), class: "nav-link"%1> %>
-        </li>
-      </ul>
-      <ul class="nav navbar-nav pull-xs-right">
-        <li>
-          <a class="nav-link" href="#">Sign out</a>
-          <%# <%= link "Log out", to: auth_path(@conn, :logout), method: :delete, class: "btn btn-danger-outline" %1> %>
-        </li>
-      </ul>
-    </nav>
+      <nav class="navbar bg-deep-purple-900 text-normal navbar-fixed-top">
+    <div class="container">
+        <ul class="nav navbar-nav">
+          <a class="navbar-brand" href="#">Kraken</a>
+          <li class="nav-item">
+            <%= link "Dashboard", to: dashboard_path(@conn, :index), class: "nav-link" %>
+          </li>
+          <li>
+            <%= link "Connections", to: connection_path(@conn, :index), class: "nav-link" %>
+          </li>
+        </ul>
+        <ul class="nav navbar-nav pull-xs-right">
+          <li>
+            <%= link "Log out", to: session_path(@conn, :destroy), method: :delete, class: "nav-link" %>
+          </li>
+        </ul>
+    </div>
+      </nav>
 
     <div class="content-wrapper">
-      <div class="container-fluid">
+      <div class="container">
         <%= get_flash(@conn, :info) %>
         <%= get_flash(@conn, :error) %>
 
