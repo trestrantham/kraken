@@ -13,7 +13,7 @@ defmodule Kraken.ConnectionController do
     current_user = Guardian.Plug.current_resource(conn)
     render conn, "index.html",
       current_user: current_user,
-      connections: Ecto.Model.assoc(user, :connections) |> Repo.all
+      connections: Ecto.Model.assoc(current_user, :connections) |> Repo.all
   end
 
   def request(conn, _params, current_user, _claims) do
