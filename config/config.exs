@@ -42,5 +42,5 @@ config :ueberauth, Ueberauth,
   ]
 
 config :ueberauth, Ueberauth.Strategy.Fitbit.OAuth,
-  consumer_key: System.get_env("FITBIT_CLIENT_ID"),
-  consumer_secret: System.get_env("FITBIT_CLIENT_SECRET")
+  client_id: System.get_env("FITBIT_CLIENT_ID"),
+  client_secret: System.get_env("FITBIT_CLIENT_SECRET")
