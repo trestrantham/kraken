@@ -37,7 +37,8 @@ defmodule Kraken.Mixfile do
       :phoenix_ecto,
       :phoenix_html,
       :postgrex,
-      :ueberauth
+      :ueberauth,
+      :ueberauth_fitbit
     ]
   end
 
@@ -59,7 +60,8 @@ defmodule Kraken.Mixfile do
       {:phoenix_html, "~> 2.3"},
       {:phoenix_live_reload, "~> 1.0", only: :dev},
       {:postgrex, ">= 0.0.0"},
-      {:ueberauth, "~> 0.2"}
+      {:ueberauth, "~> 0.2"},
+      {:ueberauth_fitbit, "~> 0.2"}
     ]
   end
 

@@ -33,7 +33,8 @@ defmodule Kraken.Router do
   scope "/connection", Kraken do
     pipe_through :browser
 
-    get "/:provider", ConnectionController, :request
-    get "/:provider/callback", ConnectionController, :callback
+    get "/:identity", ConnectionController, :request
+    get "/:identity/callback", ConnectionController, :callback
+    post "/:identity/callback", ConnectionController, :callback
   end
 end

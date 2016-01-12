@@ -10,10 +10,14 @@
   <div class="col-md-4">
     <div class="card indigo">
       <div class="card-header">
-        <div class="card-title">active users</div>
         <i class="material-icons"></i>
       </div>
-      <div class="card-content">8,245</div>
+      <div class="card-content">
+        <a class="btn btn-primary col-xs-12" href="<%= connection_path(@conn, :request, "fitbit") %>">
+          <i class='fa fa-github'></i>
+          Fitbit
+        </a>
+      </div>
       <div class="card-footer">Ratione patriam incondita ratione</div>
     </div>
   </div>

@@ -8,6 +8,8 @@ defmodule Kraken.User do
 
     field :password, :string, virtual: true
 
+    has_many :connections, Kraken.DataConnection
+
     timestamps
   end
 
