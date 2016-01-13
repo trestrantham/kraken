@@ -19,15 +19,15 @@ defmodule Kraken.ConnectionController do
   end
 
   def request(conn, _params, current_user, _claims) do
-    render conn, "request.html",
+    render conn, "index.html",
       current_user: current_user,
-      current_connections: connections(current_user)
+      connections: connections(current_user)
   end
 
   def callback(%Plug.Conn{assigns: %{ueberauth_failure: fails}} = conn, _params, current_user, _claims) do
     conn
     |> put_flash(:error, hd(fails.errors).message)
-    |> render("request.html", current_user: current_user, connections: connections(current_user))
+    |> render("index.html", current_user: current_user, connections: connections(current_user))
   end
 
   def callback(%Plug.Conn{assigns: %{ueberauth_auth: auth}} = conn, _params, current_user, _claims) do
@@ -40,7 +40,7 @@ defmodule Kraken.ConnectionController do
         |> put_flash(:error, "There was a problem creating your account. Please check the highlighted fields below.")
     end
 
-    render("request.html", current_user: current_user, connections: connections(current_user))
+    render("index.html", current_user: current_user, connections: connections(current_user))
   end
 
   defp connections(nil), do: []
