@@ -7,7 +7,7 @@ defmodule Kraken.ConnectionController do
   use Kraken.Web, :controller
 
   plug Ueberauth
-  plug Guardian.Plug.EnsureAuthenticated, handler: Kraken.ControllerHelper
+  # plug Guardian.Plug.EnsureAuthenticated, handler: Kraken.ControllerHelper
 
   alias Kraken.AddDataConnection
 

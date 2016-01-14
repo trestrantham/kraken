@@ -1,6 +1,8 @@
 defmodule Kraken.UserController do
   use Kraken.Web, :controller
+
   plug :put_layout, "chromeless.html"
+
   alias Kraken.User
 
   def new(conn, _params) do
