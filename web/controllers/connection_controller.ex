@@ -12,7 +12,6 @@ defmodule Kraken.ConnectionController do
   alias Kraken.AddDataConnection
 
   def index(conn, _params, current_user, _claims) do
-    current_user = Guardian.Plug.current_resource(conn)
     render conn, "index.html",
       current_user: current_user,
       connections: connections(current_user)
@@ -48,8 +47,6 @@ defmodule Kraken.ConnectionController do
 
   defp connections(nil), do: []
   defp connections(%Kraken.User{} = user) do
-    Ecto.Model.assoc(user, :connections)
-      |> Repo.all
-      |> Enum.map(&(&1.provider))
+    Ecto.Model.assoc(user, :connections) |> Repo.all
   end
 end
