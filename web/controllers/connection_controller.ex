@@ -11,7 +11,7 @@ defmodule Kraken.ConnectionController do
 
   alias Kraken.AddDataConnection
 
-  def index(conn, _params) do
+  def index(conn, _params, current_user, _claims) do
     current_user = Guardian.Plug.current_resource(conn)
     render conn, "index.html",
       current_user: current_user,
