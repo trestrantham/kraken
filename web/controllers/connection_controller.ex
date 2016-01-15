@@ -5,9 +5,9 @@ defmodule Kraken.ConnectionController do
   The actual creation and lookup of users/authorizations is handled by UserFromAuth
   """
   use Kraken.Web, :controller
+  use Guardian.Phoenix.Controller
 
   plug Ueberauth
-  plug Guardian.Plug.EnsureAuthenticated, handler: Kraken.ControllerHelper
 
   alias Kraken.AddDataConnection
 
