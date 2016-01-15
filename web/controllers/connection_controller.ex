@@ -7,7 +7,7 @@ defmodule Kraken.ConnectionController do
   use Kraken.Web, :controller
 
   plug Ueberauth
-  # plug Guardian.Plug.EnsureAuthenticated, handler: Kraken.ControllerHelper
+  plug Guardian.Plug.EnsureAuthenticated, handler: Kraken.ControllerHelper
 
   alias Kraken.AddDataConnection
 
@@ -31,7 +31,7 @@ defmodule Kraken.ConnectionController do
   end
 
   # def callback(%Plug.Conn{assigns: %{ueberauth_auth: auth}} = conn, _params, current_user, _claims) do
-  def callback(%Plug.Conn{assigns: %{ueberauth_auth: auth}} = conn, _params) do
+  def callback(%Plug.Conn{assigns: %{ueberauth_auth: auth}} = conn, _params, current_user, _claims) do
     case AddDataConnection.call(auth, current_user, Repo) do
       {:ok, connection} ->
         conn

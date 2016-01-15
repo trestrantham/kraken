@@ -38,7 +38,7 @@ defmodule Kraken.AddDataConnection do
     end
   end
 
-  defp authorization_from_auth(user, auth, repo) do
+  defp authorization_from_auth(auth, user, repo) do
     connection = Ecto.Model.build(user, :connections)
     result = DataConnection.changeset(
       connection,
