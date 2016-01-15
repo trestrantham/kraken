@@ -3,15 +3,15 @@ defmodule Kraken.AddDataConnection do
   alias Kraken.DataConnection
   alias Ueberauth.Auth
 
-  def call(auth, current_user, repo) do
+  def call(auth, user, repo) do
     case auth_and_validate(auth, repo) do
-      {:error, :not_found} -> authorization_from_auth(auth, current_user, repo)
+      {:error, :not_found} -> connection_from_auth(auth, user, repo)
       {:error, reason}     -> {:error, reason}
-      authorization        ->
-        if authorization.expires_at && authorization.expires_at < Guardian.Utils.timestamp do
-          replace_authorization(authorization, auth, current_user, repo)
+      connection           ->
+        if connection.expires_at && connection.expires_at < Guardian.Utils.timestamp do
+          replace_connection(connection, auth, user, repo)
         end
-        {:ok, authorization}
+        {:ok, connection}
     end
   end
 
@@ -27,18 +27,18 @@ defmodule Kraken.AddDataConnection do
     end
   end
 
-  defp replace_authorization(authorization, auth, current_user, repo) do
+  defp replace_connection(connection, auth, user, repo) do
     case repo.transaction(fn ->
-      repo.delete(authorization)
-      authorization_from_auth(current_user, auth, repo)
-      current_user
+      repo.delete(connection)
+      connection_from_auth(user, auth, repo)
+      user
     end) do
       {:ok, user} -> {:ok, user}
       {:error, reason} -> {:error, reason}
     end
   end
 
-  defp authorization_from_auth(auth, user, repo) do
+  defp connection_from_auth(auth, user, repo) do
     connection = Ecto.Model.build(user, :connections)
     result = DataConnection.changeset(
       connection,
