@@ -15,7 +15,7 @@ defmodule Kraken.ConnectionController do
     current_user = Guardian.Plug.current_resource(conn)
     render conn, "index.html",
       current_user: current_user,
-      connections: Ecto.Model.assoc(current_user, :connections) |> Repo.all
+      connections: connections(current_user)
   end
 
   def request(conn, _params, current_user, _claims) do
@@ -30,7 +30,8 @@ defmodule Kraken.ConnectionController do
     |> render("index.html", current_user: current_user, connections: connections(current_user))
   end
 
-  def callback(%Plug.Conn{assigns: %{ueberauth_auth: auth}} = conn, _params, current_user, _claims) do
+  # def callback(%Plug.Conn{assigns: %{ueberauth_auth: auth}} = conn, _params, current_user, _claims) do
+  def callback(%Plug.Conn{assigns: %{ueberauth_auth: auth}} = conn, _params) do
     case AddDataConnection.call(auth, current_user, Repo) do
       {:ok, connection} ->
         conn
@@ -40,7 +41,9 @@ defmodule Kraken.ConnectionController do
         |> put_flash(:error, "There was a problem creating your account. Please check the highlighted fields below.")
     end
 
-    render("index.html", current_user: current_user, connections: connections(current_user))
+    render conn, "index.html",
+      current_user: current_user,
+      connections: connections(current_user)
   end
 
   defp connections(nil), do: []
