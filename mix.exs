@@ -2,15 +2,19 @@ defmodule Kraken.Mixfile do
   use Mix.Project
 
   def project do
-    [app: :kraken,
-     version: "0.0.1",
-     elixir: "~> 1.0",
-     elixirc_paths: elixirc_paths(Mix.env),
-     compilers: [:phoenix, :gettext] ++ Mix.compilers,
-     build_embedded: Mix.env == :prod,
-     start_permanent: Mix.env == :prod,
-     aliases: aliases,
-     deps: deps]
+    [
+      app: :kraken,
+      version: "0.0.1",
+      elixir: "~> 1.0",
+      elixirc_paths: elixirc_paths(Mix.env),
+      compilers: [:phoenix, :gettext] ++ Mix.compilers,
+      build_embedded: Mix.env == :prod,
+      start_permanent: Mix.env == :prod,
+      aliases: aliases,
+      deps: deps,
+      test_coverage: [tool: ExCoveralls],
+      preferred_cli_env: ["coveralls": :test, "coveralls.detail": :test, "coveralls.post": :test]
+    ]
   end
 
   # Configuration for the OTP application.
@@ -53,6 +57,7 @@ defmodule Kraken.Mixfile do
     [
       {:comeonin, "~> 1.6"},
       {:cowboy, "~> 1.0"},
+      {:excoveralls, "~> 0.4", only: :test},
       {:gettext, "~> 0.9"},
       {:guardian, "~> 0.9.0"},
       {:phoenix, "~> 1.1.2"},
