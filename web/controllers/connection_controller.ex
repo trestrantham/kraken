@@ -35,7 +35,7 @@ defmodule Kraken.ConnectionController do
       {:ok, connection} ->
         conn
         |> put_flash(:info, "Signed in as #{connection.user.name}")
-      {:error, errors} ->
+      {:error, _errors} ->
         conn
         |> put_flash(:error, "There was a problem creating your account. Please check the highlighted fields below.")
     end

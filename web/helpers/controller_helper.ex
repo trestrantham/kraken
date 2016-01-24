@@ -3,7 +3,7 @@ defmodule Kraken.ControllerHelper do
   import Phoenix.Controller
   import Kraken.Router.Helpers
 
-  def unauthenticated(conn, params) do
+  def unauthenticated(conn, _params) do
     conn
     |> put_status(401)
     |> put_flash(:error, "You must log in to view that page.")

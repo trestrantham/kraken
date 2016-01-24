@@ -1,7 +1,5 @@
 defmodule Kraken.AddDataConnection do
-  alias Kraken.User
   alias Kraken.DataConnection
-  alias Ueberauth.Auth
 
   def call(auth, user, repo) do
     case auth_and_validate(auth, repo) do
