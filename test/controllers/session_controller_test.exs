@@ -7,7 +7,8 @@ defmodule Kraken.SessionControllerTest do
 
   test "GET :new when not logged in" do
     conn = get conn, session_path(conn, :new)
-    assert html_response(conn, 200)
+
+    assert html_response(conn, 200) =~ "Log in to Kraken"
   end
 
   test "GET :new when logged in", %{user: user} do
