@@ -1,10 +1,15 @@
 defmodule Kraken.SessionController do
   use Kraken.Web, :controller
   plug :put_layout, "chromeless.html"
-  alias Kraken.User
 
   def new(conn, _params) do
-    render conn, "new.html", email: ""
+    current_user = Guardian.Plug.current_resource(conn)
+
+    if current_user do
+      redirect(conn, to: dashboard_path(conn, :index))
+    else
+      render conn, "new.html", email: ""
+    end
   end
 
   def create(conn, %{"session" => %{"email" => email, "password" => password}}) do
@@ -23,6 +28,6 @@ defmodule Kraken.SessionController do
   def destroy(conn, _params) do
     conn
     |> Guardian.Plug.sign_out
-    |> redirect(to: session_path(conn, :new))
+    |> redirect(to: page_path(conn, :index))
   end
 end
