@@ -6,9 +6,15 @@ defmodule Kraken.UserController do
   alias Kraken.User
 
   def new(conn, _params) do
-    changeset = User.changeset(%User{})
+    current_user = Guardian.Plug.current_resource(conn)
 
-    render conn, "new.html", changeset: changeset
+    if current_user do
+      redirect(conn, to: dashboard_path(conn, :index))
+    else
+      changeset = User.changeset(%User{})
+
+      render conn, "new.html", changeset: changeset
+    end
   end
 
   def create(conn, %{"user" => user_params}) do
