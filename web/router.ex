@@ -17,8 +17,7 @@ defmodule Kraken.Router do
   scope "/", Kraken do
     pipe_through [:browser, :browser_auth]
 
-    # get  "/", PageController, :index
-    get  "/",  SessionController, :new
+    get  "/", PageController, :index
 
     get  "/signup", UserController, :new
     post "/signup", UserController, :create

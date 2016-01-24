@@ -25,6 +25,7 @@ defmodule Kraken.ConnCase do
       import Ecto.Query, only: [from: 2]
 
       import Kraken.Router.Helpers
+      import Kraken.TestHelpers
 
       # The default endpoint for testing
       @endpoint Kraken.Endpoint
