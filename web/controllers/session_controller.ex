@@ -16,7 +16,7 @@ defmodule Kraken.SessionController do
       {:error, _reason} ->
         conn
         |> put_flash(:error, "Could not log in with those credentials.")
-        |> render "new.html", email: email
+        |> render("new.html", email: email)
     end  
   end
 

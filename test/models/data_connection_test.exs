@@ -3,7 +3,12 @@ defmodule Kraken.DataConnectionTest do
 
   alias Kraken.DataConnection
 
-  @valid_attrs %{provider: "some content", uid: "some content", user_id: 42, token: "some token"}
+  @valid_attrs %{
+    provider: "some content",
+    uid: "some content",
+    user_id: 42,
+    token: "some token"
+  }
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do
