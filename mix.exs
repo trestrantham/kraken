@@ -54,11 +54,12 @@ defmodule Kraken.Mixfile do
       {:excoveralls, "~> 0.4", only: :test},
       {:gettext, "~> 0.9"},
       {:guardian, "~> 0.9.0"},
-      {:httpoison, "~> 0.8.0"},
+      {:httpoison, "~> 0.8.1"},
       {:phoenix, "~> 1.1.2"},
       {:phoenix_ecto, "~> 2.0"},
       {:phoenix_html, "~> 2.3"},
       {:phoenix_live_reload, "~> 1.0", only: :dev},
+      {:poison, "~> 1.5.2"},
       {:postgrex, ">= 0.0.0"},
       {:ueberauth, "~> 0.2"},
       {:ueberauth_fitbit, "~> 0.2"}
