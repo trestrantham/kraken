@@ -8,8 +8,8 @@ body {
   font-size: 14px;
 }
 
-a,
-a:hover {
+a:not(.btn),
+a:not(.btn):hover {
   color: $indigo !important;
 }
 
