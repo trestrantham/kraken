@@ -22,7 +22,7 @@
               Reconnect
             </a>
           <% else %>
-            <span class="btn btn-primary cursor-text hover">
+            <span class="btn btn-primary cursor-text active">
               <i class="fa fa-pied-piper"></i>
               Connected
             </span>
