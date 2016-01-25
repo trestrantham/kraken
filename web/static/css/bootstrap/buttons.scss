@@ -11,6 +11,7 @@
   &.btn-default {
     background-color: $grey-50;
 
+    &.active,
     &:hover,
     &:focus,
     &:active {
@@ -30,6 +31,7 @@
       background-color: $indigo;
     }
 
+    &.active,
     &:focus,
     &:active {
       background-color: $indigo-900;
@@ -45,6 +47,7 @@
   &.btn-success {
     background-color: $green-400;
 
+    &.active,
     &:hover,
     &:focus,
     &:active {
@@ -61,6 +64,7 @@
   &.btn-info {
     background-color: $blue-400;
 
+    &.active,
     &:hover,
     &:focus,
     &:active {
@@ -77,6 +81,7 @@
   &.btn-warning {
     background-color: $orange-400;
 
+    &.active,
     &:hover,
     &:focus,
     &:active {
@@ -93,6 +98,7 @@
   &.btn-danger {
     background-color: $red-400;
 
+    &.active,
     &:hover,
     &:focus,
     &:active {
