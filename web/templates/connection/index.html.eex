@@ -18,12 +18,12 @@
         <div class="card-footer">
           <%= if @connections |> fitbit_connection |> expired? do %>
             <a class="btn btn-primary" href="<%= connection_path(@conn, :request, "fitbit") %>">
-              <i class='fa fa-pied-piper'></i>
+              <i class="fa fa-pied-piper"></i>
               Reconnect
             </a>
           <% else %>
             <span class="btn btn-primary cursor-text hover">
-              <i class='fa fa-pied-piper'></i>
+              <i class="fa fa-pied-piper"></i>
               Connected
             </span>
           <% end %>
@@ -32,7 +32,7 @@
         <div class="card-content">Fitbit</div>
         <div class="card-footer">
           <a class="btn btn-primary" href="<%= connection_path(@conn, :request, "fitbit") %>">
-            <i class='fa fa-pied-piper'></i>
+            <i class="fa fa-pied-piper"></i>
             Connect
           </a>
           steps, floors, weight
@@ -66,7 +66,7 @@
 <% [] -> %>
   <p>No connections found</p>
 <% connections -> %>
-  <table class='table table-hover'>
+  <table class="table table-hover">
     <thead>
       <th>Provider</th>
       <th>UID</th>
