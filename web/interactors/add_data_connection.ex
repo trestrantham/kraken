@@ -50,8 +50,11 @@ defmodule Kraken.AddDataConnection do
     ) |> repo.insert
 
     case result do
-      {:ok, the_auth} -> the_auth
-      {:error, reason} -> repo.rollback(reason)
+      {:ok, the_auth} ->
+        {:ok, the_auth}
+      {:error, reason} ->
+        repo.rollback(reason)
+        {:error, reason}
     end
   end
 
