@@ -8,12 +8,16 @@
 <br>
 <div class="row">
   <div class="col-md-4">
-    <div class="card indigo">
-      <div class="card-header">
-        <div class="card-title">Steps, floors, weight</div>
-        <i class="material-icons"></i>
-      </div>
-      <%= if @connections |> fitbit_connection do %>
+    <%= if @connections |> fitbit_connection do %>
+      <div class="card indigo">
+        <div class="card-header">
+          <%= if @connections |> fitbit_connection |> expired? do %>
+            <div class="card-title">Token has expired</div>
+          <% else %>
+            <div class="card-title">Connected</div>
+          <% end %>
+          <i class="material-icons"></i>
+        </div>
         <div class="card-content">Fitbit</div>
         <div class="card-footer">
           <%= if @connections |> fitbit_connection |> expired? do %>
@@ -28,38 +32,43 @@
             </span>
           <% end %>
         </div>
-      <% else %>
+      </div>
+    <% else %>
+      <div class="card indigo">
+        <div class="card-header">
+          <div class="card-title">Available</div>
+          <i class="material-icons"></i>
+        </div>
         <div class="card-content">Fitbit</div>
         <div class="card-footer">
           <a class="btn btn-primary" href="<%= connection_path(@conn, :request, "fitbit") %>">
             <i class="fa fa-pied-piper"></i>
             Connect
           </a>
-          steps, floors, weight
         </div>
-      <% end %>
-    </div>
-  </div>
-  <div class="col-md-4">
-    <div class="card teal">
-      <div class="card-header">
-        <div class="card-title">invoices sent</div>
-        <i class="material-icons"></i>
       </div>
-      <div class="card-content">1,014</div>
-      <div class="card-footer">Ratione patriam incondita ratione</div>
-    </div>
+    <% end %>
   </div>
-  <div class="col-md-4">
-    <div class="card orange">
-      <div class="card-header">
-        <div class="card-title">total sales</div>
-        <i class="material-icons"></i>
-      </div>
-      <div class="card-content">$ 61,295</div>
-      <div class="card-footer">Ratione patriam incondita ratione</div>
-    </div>
-  </div>
+  <%# <div class="col-md-4"> %>
+  <%#   <div class="card teal"> %>
+  <%#     <div class="card-header"> %>
+  <%#       <div class="card-title">invoices sent</div> %>
+  <%#       <i class="material-icons"></i> %>
+  <%#     </div> %>
+  <%#     <div class="card-content">1,014</div> %>
+  <%#     <div class="card-footer">Ratione patriam incondita ratione</div> %>
+  <%#   </div> %>
+  <%# </div> %>
+  <%# <div class="col-md-4"> %>
+  <%#   <div class="card orange"> %>
+  <%#     <div class="card-header"> %>
+  <%#       <div class="card-title">total sales</div> %>
+  <%#       <i class="material-icons"></i> %>
+  <%#     </div> %>
+  <%#     <div class="card-content">$ 61,295</div> %>
+  <%#     <div class="card-footer">Ratione patriam incondita ratione</div> %>
+  <%#   </div> %>
+  <%# </div> %>
 </div>
 
 <%= case @connections do %>
