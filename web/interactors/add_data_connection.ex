@@ -6,7 +6,7 @@ defmodule Kraken.AddDataConnection do
       {:error, :not_found} -> connection_from_auth(auth, user, repo)
       {:error, reason}     -> {:error, reason}
       connection           ->
-        if connection.expires_at && connection.expires_at < Guardian.Utils.timestamp do
+        if DataConnection.expired?(connection) do
           replace_connection(connection, auth, user, repo)
         end
         {:ok, connection}

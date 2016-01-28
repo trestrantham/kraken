@@ -30,4 +30,8 @@ defmodule Kraken.DataConnection do
     |> foreign_key_constraint(:user_id)
     |> unique_constraint(:provider_uid)
   end
+
+  def expired?(%Kraken.DataConnection{} = connection) do
+    connection.expires_at && connection.expires_at < Guardian.Utils.timestamp
+  end
 end

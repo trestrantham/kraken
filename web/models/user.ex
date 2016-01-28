@@ -1,6 +1,10 @@
 defmodule Kraken.User do
   use Kraken.Web, :model
 
+  import Ecto.Query
+
+  alias Kraken.Repo
+
   schema "users" do
     field :name, :string
     field :email, :string
@@ -29,6 +33,13 @@ defmodule Kraken.User do
     |> cast(params, ~w(password), [])
     |> validate_length(:password, min: 8, max: 100)
     |> put_pass_hash()
+  end
+
+  def provider_connection(%Kraken.User{} = user, provider) do
+    Kraken.DataConnection
+    |> where(user_id: ^user.id)
+    |> where(provider: ^provider)
+    |> Repo.one
   end
 
   defp put_pass_hash(changeset) do
