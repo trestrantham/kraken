@@ -34,7 +34,7 @@ defmodule Kraken.ConnectionController do
     case AddDataConnection.call(auth, current_user, Repo) do
       {:ok, connection} ->
         conn
-        |> put_flash(:info, "Signed in as #{connection.user.name}")
+        |> put_flash(:info, "#{connection.provider} was added successfully.")
       {:error, _errors} ->
         conn
         |> put_flash(:error, "There was a problem creating your account. Please check the highlighted fields below.")
