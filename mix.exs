@@ -32,6 +32,7 @@ defmodule Kraken.Mixfile do
     [
       :comeonin,
       :cowboy,
+      :fitbit,
       :gettext,
       :httpoison,
       :logger,
@@ -51,10 +52,12 @@ defmodule Kraken.Mixfile do
     [
       {:comeonin, "~> 1.6"},
       {:cowboy, "~> 1.0"},
+      {:fitbit, git: "https://github.com/trestrantham/fitbit.git"},
       {:excoveralls, "~> 0.4", only: :test},
       {:gettext, "~> 0.9"},
       {:guardian, "~> 0.9.0"},
       {:httpoison, "~> 0.8.1"},
+      {:mix_test_watch, "~> 0.2", only: :dev},
       {:phoenix, "~> 1.1.2"},
       {:phoenix_ecto, "~> 2.0"},
       {:phoenix_html, "~> 2.3"},
