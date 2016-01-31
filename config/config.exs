@@ -28,6 +28,10 @@ config :phoenix, :generators,
   migration: true,
   binary_id: false
 
+config :fitbit,
+  client_id: System.get_env("FITBIT_CLIENT_ID"),
+  client_secret: System.get_env("FITBIT_CLIENT_SECRET")
+
 config :guardian, Guardian,
   issuer: "Kraken",
   ttl: { 30, :days },
