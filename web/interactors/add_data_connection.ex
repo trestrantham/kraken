@@ -1,20 +1,20 @@
 defmodule Kraken.AddDataConnection do
-  alias Kraken.DataConnection
+  alias Kraken.{DataConnection,Repo}
 
-  def call(auth, user, repo) do
-    case auth_and_validate(auth, repo) do
-      {:error, :not_found} -> connection_from_auth(auth, user, repo)
+  def call(auth, user) do
+    case auth_and_validate(auth) do
+      {:error, :not_found} -> connection_from_auth(auth, user)
       {:error, reason}     -> {:error, reason}
       connection           ->
         if DataConnection.expired?(connection) do
-          replace_connection(connection, auth, user, repo)
+          replace_connection(connection, auth, user)
         end
         {:ok, connection}
     end
   end
 
-  defp auth_and_validate(auth, repo) do
-    case repo.get_by(DataConnection, uid: uid_from_auth(auth), provider: to_string(auth.provider)) do
+  defp auth_and_validate(auth) do
+    case Repo.get_by(DataConnection, uid: auth.uid, provider: to_string(auth.provider)) do
       nil -> {:error, :not_found}
       connection ->
         if connection.token == auth.credentials.token do
@@ -25,39 +25,35 @@ defmodule Kraken.AddDataConnection do
     end
   end
 
-  defp replace_connection(connection, auth, user, repo) do
-    case repo.transaction(fn ->
-      repo.delete(connection)
-      connection_from_auth(user, auth, repo)
+  defp replace_connection(connection, auth, user) do
+    case Repo.transaction(fn ->
+      Repo.delete(connection)
+      connection_from_auth(user, auth)
       user
     end) do
-      {:ok, user} -> {:ok, user}
+      {:ok, user}      -> {:ok, user}
       {:error, reason} -> {:error, reason}
     end
   end
 
-  defp connection_from_auth(auth, user, repo) do
-    connection = Ecto.Model.build(user, :connections)
+  defp connection_from_auth(auth, user) do
     result = DataConnection.changeset(
-      connection,
+      %Kraken.DataConnection{},
       %{
         provider: to_string(auth.provider),
-        uid: uid_from_auth(auth),
-        token: token_from_auth(auth),
+        uid: auth.uid,
+        token: auth.credentials.token,
         refresh_token: auth.credentials.refresh_token,
         expires_at: auth.credentials.expires_at
       }
-    ) |> repo.insert
+    ) |> Repo.insert
 
     case result do
       {:ok, the_auth} ->
         {:ok, the_auth}
       {:error, reason} ->
-        repo.rollback(reason)
+        Repo.rollback(reason)
         {:error, reason}
     end
   end
-
-  defp token_from_auth(auth), do: auth.credentials.token
-  defp uid_from_auth(auth), do: auth.uid
 end
