@@ -64,7 +64,7 @@ defmodule Kraken.Mixfile do
       {:phoenix_html, "~> 2.3"},
       {:phoenix_live_reload, "~> 1.0", only: :dev},
       {:poison, "~> 1.5.2"},
-      {:postgrex, ">= 0.0.0"},
+      {:postgrex, "~> 0.11.0"},
       {:timex, "~> 1.0"},
       {:ueberauth, "~> 0.2"},
       {:ueberauth_fitbit, "~> 0.2"}
