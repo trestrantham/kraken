@@ -9,7 +9,7 @@
   "ecto": {:hex, :ecto, "1.1.1"},
   "excoveralls": {:hex, :excoveralls, "0.4.5"},
   "exjsx": {:hex, :exjsx, "3.2.0"},
-  "fitbit": {:git, "https://github.com/trestrantham/fitbit.git", "fe9d6b80aaa18e51c3db7131bbd083e565092be1", []},
+  "fitbit": {:git, "https://github.com/trestrantham/fitbit.git", "b76d3962737649f381adefdef85da25d5606bf02", []},
   "fs": {:hex, :fs, "0.9.2"},
   "gettext": {:hex, :gettext, "0.9.0"},
   "guardian": {:hex, :guardian, "0.9.0"},
