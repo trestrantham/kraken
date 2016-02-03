@@ -42,7 +42,7 @@ config :guardian, Guardian,
 config :ueberauth, Ueberauth,
   base_path: "/connection",
   providers: [
-    fitbit: {Ueberauth.Strategy.Fitbit, []},
+    fitbit: {Ueberauth.Strategy.Fitbit, [default_scope: "weight activity profile"]}
   ]
 
 config :ueberauth, Ueberauth.Strategy.Fitbit.OAuth,
