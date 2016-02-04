@@ -44,7 +44,8 @@ defmodule Kraken.AddDataConnection do
         uid: auth.uid,
         token: auth.credentials.token,
         refresh_token: auth.credentials.refresh_token,
-        expires_at: auth.credentials.expires_at
+        expires_at: auth.credentials.expires_at,
+        user_id: user.id
       }
     ) |> Repo.insert
 

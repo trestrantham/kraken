@@ -1,8 +1,6 @@
 defmodule Kraken.RefreshUserData do
   import Ecto.Query
-  import Fitbit.Authentication
-
-  alias Kraken.{User,DataConnection,Repo}
+  alias Kraken.{DataConnection,Repo}
 
   def call(user) do
     update_connection_tokens(user)
@@ -15,12 +13,12 @@ defmodule Kraken.RefreshUserData do
   def update_connection_tokens(user) do
     for connection <- connections(user) do
       if connection.expires_at && connection.expires_at < Date.now(:secs) do
-        replace_connection(connection, user)
+        update_connection(connection)
       end
     end
   end
 
-  def replace_connection(connection, user) do
+  def update_connection(connection) do
     case Repo.transaction(fn ->
 
       case Fitbit.Authentication.refresh_token(connection.refresh_token) do
