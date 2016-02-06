@@ -31,7 +31,7 @@ defmodule Kraken.ConnectionController do
 
   # def callback(%Plug.Conn{assigns: %{ueberauth_auth: auth}} = conn, _params, current_user, _claims) do
   def callback(%Plug.Conn{assigns: %{ueberauth_auth: auth}} = conn, _params, current_user, _claims) do
-    case AddDataConnection.call(auth, current_user, Repo) do
+    case AddDataConnection.call(auth, current_user) do
       {:ok, connection} ->
         conn
         |> put_flash(:info, "#{connection.provider} was added successfully.")
