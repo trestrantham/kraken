@@ -26,7 +26,7 @@ defmodule Kraken.RefreshUserData do
           changeset = DataConnection.changeset(
             connection,
             %{
-              access_token: authentication.access_token,
+              token: authentication.access_token,
               refresh_token: authentication.refresh_token,
               expires_at: Date.now(:secs) + authentication.expires_in
             }
