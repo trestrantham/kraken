@@ -7,6 +7,13 @@ defmodule Kraken.RefreshUserData do
   def call(user) do
     update_connection_tokens(user)
 
+    for connection <- connections(user) do
+      case connection.provider do
+        "fitbit" ->
+          update_fitbit_data(user)
+      end
+    end
+
     {:ok, :success}
   end
 
@@ -21,8 +28,7 @@ defmodule Kraken.RefreshUserData do
   def update_connection(connection) do
     case Repo.transaction(fn ->
       case Fitbit.Authentication.refresh_token(connection.refresh_token) do
-        # {:ok, %Fitbit.Authentication{} = authentication} ->
-        %Fitbit.Authentication{} = authentication ->
+        {:ok, %Fitbit.Authentication{} = authentication} ->
           changeset = DataConnection.changeset(
             connection,
             %{
@@ -45,6 +51,18 @@ defmodule Kraken.RefreshUserData do
       {:ok, connection} -> {:ok, connection}
       {:error, reason}  -> {:error, reason}
     end
+  end
+
+  def update_fitbit_data(connection) do
+    Fitbit.Activity.steps(
+      connection.token,
+      DateFormat.format(
+        Date.now,
+        "%Y-%-m-%d",
+        :strftime
+      ),
+      "1y"
+    )
   end
 
   defp connections(nil), do: []
