@@ -37,7 +37,7 @@ defmodule Kraken.AddDataConnection do
   end
 
   defp connection_from_auth(auth, user) do
-    result = DataConnection.changeset(
+    changes = DataConnection.changeset(
       %Kraken.DataConnection{},
       %{
         provider: to_string(auth.provider),
@@ -47,9 +47,9 @@ defmodule Kraken.AddDataConnection do
         expires_at: auth.credentials.expires_at,
         user_id: user.id
       }
-    ) |> Repo.insert
+    )
 
-    case result do
+    case Repo.insert(changes) do
       {:ok, the_auth} ->
         {:ok, the_auth}
       {:error, reason} ->

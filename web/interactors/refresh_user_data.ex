@@ -26,30 +26,20 @@ defmodule Kraken.RefreshUserData do
   end
 
   def update_connection(connection) do
-    case Repo.transaction(fn ->
-      case Fitbit.Authentication.refresh_token(connection.refresh_token) do
-        {:ok, %Fitbit.Authentication{} = authentication} ->
-          changeset = DataConnection.changeset(
-            connection,
-            %{
-              token: authentication.access_token,
-              refresh_token: authentication.refresh_token,
-              expires_at: Date.now(:secs) + authentication.expires_in
-            }
-          )
+    case Fitbit.Authentication.refresh_token(connection.refresh_token) do
+      {:ok, %Fitbit.Authentication{} = authentication} ->
+        changeset = DataConnection.changeset(
+          connection,
+          %{
+            token: authentication.access_token,
+            refresh_token: authentication.refresh_token,
+            expires_at: Date.now(:secs) + authentication.expires_in
+          }
+        )
 
-          case Repo.update(changeset) do
-            {:ok, connection} ->
-              connection
-            {:error, error} ->
-              Repo.rollback(error)
-          end
-        {:error, error} ->
-          Repo.rollback(error)
-      end
-    end) do
-      {:ok, connection} -> {:ok, connection}
-      {:error, reason}  -> {:error, reason}
+        Repo.update(changeset)
+      {:error, error} ->
+        {:error, error}
     end
   end
 

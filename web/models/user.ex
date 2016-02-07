@@ -42,12 +42,12 @@ defmodule Kraken.User do
     |> Repo.one
   end
 
-  defp put_pass_hash(changeset) do
-    case changeset do
+  defp put_pass_hash(changes) do
+    case changes do
       %Ecto.Changeset{valid?: true, changes: %{password: pass}} ->
-        put_change(changeset, :password_hash, Comeonin.Bcrypt.hashpwsalt(pass))
+        put_change(changes, :password_hash, Comeonin.Bcrypt.hashpwsalt(pass))
       _ ->
-        changeset
+        changes
     end
   end
 end

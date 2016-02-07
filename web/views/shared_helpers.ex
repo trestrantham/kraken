@@ -12,13 +12,17 @@ defmodule Kraken.SharedHelpers do
   end
 
   def form_error_message(errors \\ [], field) do
-    if message = errors[field] do
+    message = errors[field]
+
+    if message do
       raw "<p><small class=\"error\">#{field} #{translate_error(message)}</small></p>"
     end
   end
 
   def show_flash(conn) do
-    get_flash(conn) |> flash_msg
+    conn
+    |> get_flash
+    |> flash_msg
   end
 
   def flash_msg(%{"info" => msg}) do
