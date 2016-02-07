@@ -53,6 +53,7 @@ defmodule Kraken.Mixfile do
     [
       {:comeonin, "~> 1.6"},
       {:cowboy, "~> 1.0"},
+      {:credo, "~> 0.2", only: [:dev, :test]},
       {:fitbit, git: "https://github.com/trestrantham/fitbit.git"},
       {:excoveralls, "~> 0.4", only: :test},
       {:gettext, "~> 0.9"},
