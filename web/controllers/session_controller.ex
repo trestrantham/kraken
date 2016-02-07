@@ -22,7 +22,7 @@ defmodule Kraken.SessionController do
         conn
         |> put_flash(:error, "Could not log in with those credentials.")
         |> render("new.html", email: email)
-    end  
+    end
   end
 
   def destroy(conn, _params) do
