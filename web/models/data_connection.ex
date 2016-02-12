@@ -34,4 +34,14 @@ defmodule Kraken.DataConnection do
   def expired?(%Kraken.DataConnection{} = connection) do
     connection.expires_at && connection.expires_at < Guardian.Utils.timestamp
   end
+  def expired?(_), do: true
+
+  def state(%Kraken.DataConnection{} = connection) do
+    if expired?(connection) do
+      "expired"
+    else
+      "connected"
+    end
+  end
+  def state(_), do: nil
 end

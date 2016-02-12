@@ -14,7 +14,7 @@ defmodule Kraken.ConnectionController do
   def index(conn, _params, current_user, _claims) do
     render conn, "index.html",
       current_user: current_user,
-      connections: connections(current_user)
+      user_connections: connections(current_user)
   end
 
   def request(conn, _params, current_user, _claims) do
