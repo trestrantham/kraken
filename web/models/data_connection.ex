@@ -31,6 +31,15 @@ defmodule Kraken.DataConnection do
     |> unique_constraint(:provider_uid)
   end
 
+  def for_user_and_provider(%Kraken.User{} = user, provider \\ "") do
+    Kraken.DataConnection
+    |> where(
+      user_id: ^user.id,
+      provider: ^provider
+    )
+    |> Kraken.Repo.one
+  end
+
   def expired?(%Kraken.DataConnection{} = connection) do
     connection.expires_at && connection.expires_at < Guardian.Utils.timestamp
   end
