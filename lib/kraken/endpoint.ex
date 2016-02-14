@@ -1,7 +1,7 @@
 defmodule Kraken.Endpoint do
   use Phoenix.Endpoint, otp_app: :kraken
 
-  socket "/socket", Kraken.UserSocket
+  socket "/live", Kraken.UserSocket
 
   # Serve at "/" the static files from "priv/static" directory.
   #
