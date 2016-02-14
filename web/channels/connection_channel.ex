@@ -13,7 +13,9 @@ defmodule Kraken.ConnectionChannel do
     state = data_provider.state || "available"
 
     if user && data_provider do
-      if connection = DataConnection.for_user_and_provider(user, provider) do
+      connection = DataConnection.for_user_and_provider(user, provider)
+
+      if connection do
         state = DataConnection.state(connection)
       end
 

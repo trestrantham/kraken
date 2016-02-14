@@ -64,10 +64,10 @@ defmodule Kraken.ConnectionController do
     end)
   end
 
-  defp lookup_connection(provider, connections) do
+  defp lookup_connection(provider, user_connections) do
     state = provider.state || "available"
 
-    connection = connections
+    connection = user_connections
     |> Enum.find(fn(c) ->
       c.provider == String.downcase(provider)
     end)
