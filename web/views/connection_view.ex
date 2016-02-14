@@ -1,16 +1,8 @@
 defmodule Kraken.ConnectionView do
   use Kraken.Web, :view
 
-  def connections_json(user_connections) do
-    ["fitbit", "runkeeper"]
-    |> Enum.map(fn(connection_type) ->
-      connection = connection_for_type(user_connections, connection_type) || %{state: false}
-
-      %{
-        name: connection_type,
-        state: connection.state || "available"
-      }
-    end)
+  def connections_json(connections) do
+    connections
     |> Poison.encode!
   end
 
