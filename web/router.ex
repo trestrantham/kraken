@@ -12,6 +12,7 @@ defmodule Kraken.Router do
   pipeline :browser_auth do
     plug Guardian.Plug.VerifySession
     plug Guardian.Plug.LoadResource
+    plug :put_user_token
   end
 
   scope "/", Kraken do
@@ -35,5 +36,14 @@ defmodule Kraken.Router do
     get "/:identity", ConnectionController, :request
     get "/:identity/callback", ConnectionController, :callback
     post "/:identity/callback", ConnectionController, :callback
+  end
+
+  defp put_user_token(conn, _) do
+    if current_user = Guardian.Plug.current_resource(conn) do
+      token = Phoenix.Token.sign(conn, "user socket", current_user.id)
+      assign(conn, :user_token, token)
+    else
+      conn
+    end
   end
 end
