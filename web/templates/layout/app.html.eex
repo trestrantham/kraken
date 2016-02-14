@@ -10,6 +10,8 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:700,500,400,200,100,100italic,300,300italic" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
+
+    <script>window.userToken = "<%= assigns[:user_token] %>";</script>
   </head>
   <body>
       <nav class="navbar bg-deep-purple-900 text-normal navbar-fixed-top">
