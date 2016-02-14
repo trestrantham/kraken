@@ -1,31 +1,13 @@
-// Brunch automatically concatenates all files in your
-// watched paths. Those paths can be configured at
-// config.paths.watched in "brunch-config.js".
-//
-// However, those files will only be executed if
-// explicitly imported. The only exception are files
-// in vendor, which are never wrapped in imports and
-// therefore are always executed.
-
-// Import dependencies
-//
-// If you no longer want to use a dependency, remember
-// to also remove its path from "config.paths.watched".
 import "phoenix_html"
 
-// Import local files
-//
-// Local files can be imported directly using relative
-// paths "./socket" or full ones "web/static/js/socket".
-
 import socket from "./socket"
-
 
 import React from "react"
 import ReactDOM from "react-dom"
 import { render } from "react-dom"
 
 let titleize = require("underscore.string/titleize");
+let humanize = require("underscore.string/humanize");
 
 let Connections = React.createClass({
   getInitialState: function() {
@@ -53,8 +35,8 @@ let Connections = React.createClass({
     return(
       <div className="row">
         {
-          this.state.connections.map(function(connection) {
-            return <Connection name={connection["name"]} state={connection["state"]} />
+          this.state.connections.map(function(connection, index) {
+            return <Connection key={index} name={connection["name"]} state={connection["state"]} />
           })
         }
       </div>
@@ -66,13 +48,17 @@ let Connection = React.createClass({
   configureChannel(channel) {
     channel.join()
       .receive("ok", () => {
-        console.log(`Succesfully joined the connections channel.`)
-        channel.push("ping", {})
+        console.log("Successfully joined the connections channel.")
+        channel.push("loaded", {"provider": this.state.name.toLowerCase()})
       })
-      .receive("error", () => { console.log(`Unable to join the connections channel.`) })
+      .receive("error", () => {
+        console.log("Unable to join the connections channel.")
+      })
+
     channel.on("update", payload => {
+      console.log(payload);
       this.setState({
-        connectionState: titleize(payload.state),
+        connectionState: payload.state,
         message: payload.message
       })
     })
@@ -80,9 +66,9 @@ let Connection = React.createClass({
   getInitialState() {
     return {
       channel: socket.channel(`connections:${this.props.name}`),
-      name: titleize(this.props.name),
+      name: titleize(humanize(this.props.name)),
       connectionState: this.props.state,
-      message: "steps, weight"
+      message: this.props.message
     }
   },
   componentDidMount() {
@@ -137,6 +123,10 @@ let ConnectionAction = React.createClass({
                   Reconnect
                 </a>
               );
+            case "coming_soon":
+              return(
+                <span>Coming Soon</span>
+              );
             case "syncing":
               return(
                 <a className="btn btn-primary" href={`/connection/${this.props.name}`}>
@@ -150,4 +140,6 @@ let ConnectionAction = React.createClass({
   }
 })
 
-render(<Connections />, document.getElementById("connections"))
+if (document.getElementById("connections")) {
+  render(<Connections />, document.getElementById("connections"))
+}
