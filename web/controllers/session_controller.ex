@@ -1,5 +1,6 @@
 defmodule Kraken.SessionController do
   use Kraken.Web, :controller
+
   plug :put_layout, "chromeless.html"
 
   def new(conn, _params) do
