@@ -1,10 +1,12 @@
 defmodule Kraken.Auth do
-  alias Kraken.User
-  alias Kraken.Repo
-  import Ecto.Query, only: [from: 1, from: 2]
+  import Ecto.Query
+
+  alias Kraken.{Repo,User}
 
   def validate_email_and_password(email, password) do
-    user = Repo.one(from u in User, where: u.email == ^email)
+    user = User
+    |> where(email: ^email)
+    |> Repo.one
 
     password_match = if user do
       Comeonin.Bcrypt.checkpw(password, user.password_hash)
