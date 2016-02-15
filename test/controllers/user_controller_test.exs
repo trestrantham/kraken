@@ -8,8 +8,10 @@ defmodule Kraken.UserControllerTest do
   end
 
   test "GET :new when logged in" do
-    conn = guardian_login(insert_user)
-    |> get(user_path(conn, :new))
+    conn =
+      insert_user
+      |> guardian_login
+      |> get(user_path(conn, :new))
 
     assert redirected_to(conn, 302) == dashboard_path(conn, :index)
   end

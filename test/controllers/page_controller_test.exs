@@ -8,8 +8,9 @@ defmodule Kraken.PageControllerTest do
   end
 
   test "redirects to dashboard if user is authenticated" do
-    conn = guardian_login(insert_user)
-    |> get("/")
+    conn =
+      guardian_login(insert_user)
+      |> get("/")
 
     assert redirected_to(conn, 302) == dashboard_path(conn, :index)
   end

@@ -1,5 +1,5 @@
 defmodule Kraken.TestHelpers do
-  alias Kraken.Repo
+  alias Kraken.{Repo,User}
 
   def insert_user(attrs \\ %{}) do
     changes = Dict.merge(%{
@@ -9,7 +9,7 @@ defmodule Kraken.TestHelpers do
     }, attrs)
 
     %Kraken.User{}
-    |> Kraken.User.registration_changeset(changes)
+    |> User.registration_changeset(changes)
     |> Repo.insert!()
   end
 end
