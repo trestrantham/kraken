@@ -45,7 +45,7 @@ defmodule Kraken.ConnectionController do
   end
 
   defp connections(nil) do
-    Kraken.DataProvider.all
+    Kraken.Provider.all
     |> Enum.map(fn(provider) ->
       state = provider[:state] || "available"
       Map.merge(provider, %{state: state})
@@ -58,7 +58,7 @@ defmodule Kraken.ConnectionController do
       |> Ecto.Model.assoc(:connections)
       |> Repo.all
 
-    Kraken.DataProvider.all
+    Kraken.Provider.all
     |> Enum.map(fn(provider) ->
       lookup_connection(provider, user_connections)
     end)

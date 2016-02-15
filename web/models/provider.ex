@@ -1,4 +1,4 @@
-defmodule Kraken.DataProvider do
+defmodule Kraken.Provider do
   defstruct name: nil, message: nil, state: nil
 
   @type t :: %__MODULE__{
@@ -26,7 +26,7 @@ defmodule Kraken.DataProvider do
   def all do
     @providers
     |> Enum.map(fn provider ->
-        %Kraken.DataProvider{
+        %Kraken.Provider{
           name: provider.name,
           message: provider.message,
           state: provider.state
