@@ -13,7 +13,7 @@ defmodule Kraken.Repo.Migrations.CreateDataConnections do
       timestamps
     end
 
-    create index(:data_connections, [:provider, :uid], unique: true)
+    create index(:data_connections, [:provider, :user_id], unique: true)
     create index(:data_connections, [:expires_at])
     create index(:data_connections, [:provider, :token])
   end
