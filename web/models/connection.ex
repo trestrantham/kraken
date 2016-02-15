@@ -1,7 +1,7 @@
-defmodule Kraken.DataConnection do
+defmodule Kraken.Connection do
   use Kraken.Web, :model
 
-  schema "data_connections" do
+  schema "connections" do
     field :provider, :string
     field :uid, :string
     field :token, :string
@@ -39,12 +39,12 @@ defmodule Kraken.DataConnection do
     query |> where(provider: ^provider)
   end
 
-  def expired?(%Kraken.DataConnection{} = connection) do
+  def expired?(%Kraken.Connection{} = connection) do
     connection.expires_at && connection.expires_at < Guardian.Utils.timestamp
   end
   def expired?(_), do: true
 
-  def state(%Kraken.DataConnection{} = connection) do
+  def state(%Kraken.Connection{} = connection) do
     if expired?(connection) do
       "expired"
     else

@@ -12,7 +12,7 @@ defmodule Kraken.User do
 
     field :password, :string, virtual: true
 
-    has_many :connections, Kraken.DataConnection
+    has_many :connections, Kraken.Connection
 
     timestamps
   end
@@ -36,7 +36,7 @@ defmodule Kraken.User do
   end
 
   def provider_connection(%Kraken.User{} = user, provider) do
-    Kraken.DataConnection
+    Kraken.Connection
     |> where(user_id: ^user.id)
     |> where(provider: ^provider)
     |> Repo.one

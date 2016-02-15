@@ -1,7 +1,7 @@
 defmodule Kraken.ConnectionChannel do
   use Phoenix.Channel
 
-  alias Kraken.{DataConnection,DataProvider}
+  alias Kraken.{Connection,DataProvider}
 
   def join("connections:" <> _topic_name, _auth_msg, socket) do
     {:ok, socket}
@@ -14,13 +14,13 @@ defmodule Kraken.ConnectionChannel do
 
     if user && data_provider do
       connection =
-        DataConnection
-        |> DataConnection.for_user(user)
-        |> DataConnection.for_provider(provider)
+        Connection
+        |> Connection.for_user(user)
+        |> Connection.for_provider(provider)
         |> Repo.one
 
       if connection do
-        state = DataConnection.state(connection)
+        state = Connection.state(connection)
       end
 
       data_provider = Map.merge(data_provider, %{state: state})

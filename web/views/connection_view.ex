@@ -12,7 +12,7 @@ defmodule Kraken.ConnectionView do
     |> Enum.find(fn(c) -> c.provider == connection_type end)
   end
 
-  def expired?(%Kraken.DataConnection{} = connection) do
+  def expired?(%Kraken.Connection{} = connection) do
     connection.expires_at && connection.expires_at < Guardian.Utils.timestamp
   end
   def expired?(_), do: true

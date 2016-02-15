@@ -2,7 +2,7 @@ defmodule Kraken.RefreshUserData do
   use Timex
   import Ecto.Query
 
-  alias Kraken.{DataConnection,Repo}
+  alias Kraken.{Connection,Repo}
 
   def call(user) do
     update_connection_tokens(user)
@@ -28,7 +28,7 @@ defmodule Kraken.RefreshUserData do
   def update_connection(connection) do
     case Fitbit.Authentication.refresh_token(connection.refresh_token) do
       {:ok, %Fitbit.Authentication{} = authentication} ->
-        changeset = DataConnection.changeset(
+        changeset = Connection.changeset(
           connection,
           %{
             token: authentication.access_token,
@@ -57,7 +57,7 @@ defmodule Kraken.RefreshUserData do
 
   defp connections(nil), do: []
   defp connections(%Kraken.User{} = user) do
-    DataConnection
+    Connection
     |> where(user_id: ^user.id)
     |> Repo.all
   end

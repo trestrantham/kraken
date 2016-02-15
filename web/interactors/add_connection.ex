@@ -1,12 +1,12 @@
-defmodule Kraken.AddDataConnection do
-  alias Kraken.{DataConnection,Repo}
+defmodule Kraken.AddConnection do
+  alias Kraken.{Connection,Repo}
 
   def call(auth, user) do
     case auth_and_validate(auth) do
       {:error, :not_found} -> connection_from_auth(auth, user)
       {:error, reason}     -> {:error, reason}
       connection           ->
-        if DataConnection.expired?(connection) do
+        if Connection.expired?(connection) do
           replace_connection(connection, auth, user)
         end
         {:ok, connection}
@@ -14,7 +14,7 @@ defmodule Kraken.AddDataConnection do
   end
 
   defp auth_and_validate(auth) do
-    case Repo.get_by(DataConnection, uid: auth.uid, provider: to_string(auth.provider)) do
+    case Repo.get_by(Connection, uid: auth.uid, provider: to_string(auth.provider)) do
       nil -> {:error, :not_found}
       connection ->
         if connection.token == auth.credentials.token do
@@ -37,8 +37,8 @@ defmodule Kraken.AddDataConnection do
   end
 
   defp connection_from_auth(auth, user) do
-    changes = DataConnection.changeset(
-      %Kraken.DataConnection{},
+    changes = Connection.changeset(
+      %Kraken.Connection{},
       %{
         provider: to_string(auth.provider),
         uid: auth.uid,

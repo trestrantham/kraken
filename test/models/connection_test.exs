@@ -1,7 +1,7 @@
-defmodule Kraken.DataConnectionTest do
+defmodule Kraken.ConnectionTest do
   use Kraken.ModelCase
 
-  alias Kraken.DataConnection
+  alias Kraken.Connection
 
   @valid_attrs %{
     provider: "some content",
@@ -12,12 +12,12 @@ defmodule Kraken.DataConnectionTest do
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do
-    changeset = DataConnection.changeset(%DataConnection{}, @valid_attrs)
+    changeset = Connection.changeset(%Connection{}, @valid_attrs)
     assert changeset.valid?
   end
 
   test "changeset with invalid attributes" do
-    changeset = DataConnection.changeset(%DataConnection{}, @invalid_attrs)
+    changeset = Connection.changeset(%Connection{}, @invalid_attrs)
     refute changeset.valid?
   end
 end

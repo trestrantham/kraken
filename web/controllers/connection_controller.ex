@@ -9,7 +9,7 @@ defmodule Kraken.ConnectionController do
 
   plug Ueberauth
 
-  alias Kraken.AddDataConnection
+  alias Kraken.AddConnection
 
   def index(conn, _params, current_user, _claims) do
     render conn, "index.html",
@@ -30,7 +30,7 @@ defmodule Kraken.ConnectionController do
   end
 
   def callback(%Plug.Conn{assigns: %{ueberauth_auth: auth}} = conn, _params, current_user, _claims) do
-    case AddDataConnection.call(auth, current_user) do
+    case AddConnection.call(auth, current_user) do
       {:ok, connection} ->
         conn
         |> put_flash(:info, "#{connection.provider} was added successfully.")
