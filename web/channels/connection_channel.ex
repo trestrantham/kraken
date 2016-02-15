@@ -13,7 +13,11 @@ defmodule Kraken.ConnectionChannel do
     state = data_provider.state || "available"
 
     if user && data_provider do
-      connection = DataConnection.for_user_and_provider(user, provider)
+      connection =
+        DataConnection
+        |> DataConnection.for_user(user)
+        |> DataConnection.for_provider(provider)
+        |> Repo.one
 
       if connection do
         state = DataConnection.state(connection)
@@ -26,9 +30,4 @@ defmodule Kraken.ConnectionChannel do
 
     {:noreply, socket}
   end
-
-  # def handle_in("message", %{"body" => body}, socket) do
-  #   broadcast! socket, "message", %{body: body}
-  #   {:noreply, socket}
-  # end
 end

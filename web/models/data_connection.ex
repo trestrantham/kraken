@@ -31,13 +31,12 @@ defmodule Kraken.DataConnection do
     |> unique_constraint(:provider_uid)
   end
 
-  def for_user_and_provider(%Kraken.User{} = user, provider \\ "") do
-    Kraken.DataConnection
-    |> where(
-      user_id: ^user.id,
-      provider: ^provider
-    )
-    |> Kraken.Repo.one
+  def for_user(query, %Kraken.User{} = user) do
+    query |> where(user_id: ^user.id)
+  end
+
+  def for_provider(query, provider \\ "") do
+    query |> where(provider: ^provider)
   end
 
   def expired?(%Kraken.DataConnection{} = connection) do
