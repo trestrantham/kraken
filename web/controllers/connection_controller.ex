@@ -29,7 +29,6 @@ defmodule Kraken.ConnectionController do
     |> render("index.html", current_user: current_user, connections: connections(current_user))
   end
 
-  # def callback(%Plug.Conn{assigns: %{ueberauth_auth: auth}} = conn, _params, current_user, _claims) do
   def callback(%Plug.Conn{assigns: %{ueberauth_auth: auth}} = conn, _params, current_user, _claims) do
     case AddDataConnection.call(auth, current_user) do
       {:ok, connection} ->
@@ -54,9 +53,10 @@ defmodule Kraken.ConnectionController do
   end
 
   defp connections(%Kraken.User{} = user) do
-    user_connections = user
-    |> Ecto.Model.assoc(:connections)
-    |> Repo.all
+    user_connections =
+      user
+      |> Ecto.Model.assoc(:connections)
+      |> Repo.all
 
     Kraken.DataProvider.all
     |> Enum.map(fn(provider) ->
@@ -67,10 +67,11 @@ defmodule Kraken.ConnectionController do
   defp lookup_connection(provider, user_connections) do
     state = provider.state || "available"
 
-    connection = user_connections
-    |> Enum.find(fn(c) ->
-      c.provider == String.downcase(provider)
-    end)
+    connection =
+      user_connections
+      |> Enum.find(fn(c) ->
+        c.provider == String.downcase(provider)
+      end)
 
     if connection do
       if Kraken.User.expired?(connection) do
