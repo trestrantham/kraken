@@ -35,13 +35,6 @@ defmodule Kraken.User do
     |> put_pass_hash()
   end
 
-  def provider_connection(%Kraken.User{} = user, provider) do
-    Kraken.Connection
-    |> where(user_id: ^user.id)
-    |> where(provider: ^provider)
-    |> Repo.one
-  end
-
   defp put_pass_hash(changes) do
     case changes do
       %Ecto.Changeset{valid?: true, changes: %{password: pass}} ->
