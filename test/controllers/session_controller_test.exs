@@ -1,28 +1,34 @@
 defmodule Kraken.SessionControllerTest do
   use Kraken.ConnCase
 
-  setup do
-    {:ok, %{user: insert_user}}
+  setup %{conn: conn} = config do
+    if email = config[:login_as] do
+      user = insert_user(email: email)
+      conn = guardian_login(user)
+
+      {:ok, conn: conn, user: user}
+    else
+      :ok
+    end
   end
 
-  test "log in page renders when not currently logged in" do
+  test "renders log in form" do
     conn = get conn, session_path(conn, :new)
 
     assert html_response(conn, 200) =~ "Log in to Kraken"
   end
 
-  test "log in page redirects to the dashboard if already logged on", %{user: user} do
-    conn =
-      user
-      |> guardian_login
-      |> get(session_path(conn, :new))
+  @tag login_as: "sven@rivendell.com"
+  test "redirects if logged on", %{conn: conn, user: _user} do
+    conn = get(conn, session_path(conn, :new))
 
     assert redirected_to(conn, 302) == dashboard_path(conn, :index)
   end
 
-  test "log in page with valid params redirects to dashboard", %{user: user} do
+  test "logs in and redirects" do
     assert Guardian.Plug.current_resource(conn) == nil
 
+    user = insert_user
     login_params = %{session: %{email: user.email, password: "supersecret"}}
     conn = post conn, session_path(conn, :create), login_params
 
@@ -30,18 +36,16 @@ defmodule Kraken.SessionControllerTest do
     assert Guardian.Plug.current_resource(conn).id == user.id
   end
 
-  test "log in page with invalid params shows error" do
+  test "does not log in and renders errors when invalid" do
     login_params = %{session: %{email: "notvalid", password: "short"}}
     conn = post conn, session_path(conn, :create), login_params
 
     assert html_response(conn, 200) =~ "Could not log in with those credentials."
   end
 
-  test "log out empties the current user", %{user: user} do
-    conn =
-      user
-      |> guardian_login
-      |> get("/")
+  @tag login_as: "sven@rivendell.com"
+  test "log out empties the current user", %{conn: conn, user: user} do
+    conn = get(conn, "/")
 
     assert Guardian.Plug.current_resource(conn).id == user.id
 
@@ -50,7 +54,7 @@ defmodule Kraken.SessionControllerTest do
     assert Guardian.Plug.current_resource(conn) == nil
   end
 
-  test "log out page redirects to login when not logged in" do
+  test "logs user out and redirects" do
     assert Guardian.Plug.current_resource(conn) == nil
 
     conn = delete recycle(conn), session_path(conn, :destroy)

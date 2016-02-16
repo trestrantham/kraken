@@ -1,33 +1,40 @@
 defmodule Kraken.UserControllerTest do
   use Kraken.ConnCase
 
-  setup do
-    {:ok, %{user: insert_user}}
+  alias Kraken.{Repo,User}
+
+  setup %{conn: conn} = config do
+    if email = config[:login_as] do
+      user = insert_user(email: email)
+      conn = guardian_login(user)
+
+      {:ok, conn: conn, user: user}
+    else
+      :ok
+    end
   end
 
-  test "register page renders when not currently logged in" do
+  test "renders registration form" do
     conn = get conn, user_path(conn, :new)
 
     assert html_response(conn, 200) =~ "Create an account for Kraken"
   end
 
-  test "register page redirects to the dashboard if already logged on", %{user: user} do
-    conn =
-      user
-      |> guardian_login
-      |> get(user_path(conn, :new))
+  @tag login_as: "sven@rivendell.com"
+  test "redirects if logged in", %{conn: conn, user: _user} do
+    conn = get(conn, user_path(conn, :new))
 
     assert redirected_to(conn, 302) == dashboard_path(conn, :index)
   end
 
-  test "register page with valid params redirects to dashboard" do
+  test "creates user and redirects" do
     assert Guardian.Plug.current_resource(conn) == nil
 
     register_params = %{user: %{name: "Sven Rivendell", email: "sven@rivendell.com", password: "supersecret"}}
     conn = post conn, user_path(conn, :create), register_params
 
     assert redirected_to(conn, 302) == dashboard_path(conn, :index)
-    refute Guardian.Plug.current_resource(conn) == nil
+    assert Repo.get_by!(User, email: register_params.user.email).id == Guardian.Plug.current_resource(conn).id
   end
 
   test "log in page with invalid params shows error" do
