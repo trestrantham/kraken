@@ -8,8 +8,10 @@ defmodule Kraken.DashboardControllerTest do
   end
 
   test "GET :index with a user that is logged in" do
-    conn = guardian_login(insert_user)
-    |> get(dashboard_path(conn, :index))
+    conn =
+      insert_user
+      |> guardian_login
+      |> get(dashboard_path(conn, :index))
 
     assert html_response(conn, 200)
   end
