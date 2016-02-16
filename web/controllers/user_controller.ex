@@ -23,6 +23,7 @@ defmodule Kraken.UserController do
     case Repo.insert(changeset) do
       {:ok, user} ->
         conn
+        |> Guardian.Plug.sign_in(user)
         |> put_flash(:info, "#{user.name} created!")
         |> redirect(to: dashboard_path(conn, :index))
       {:error, changeset} ->

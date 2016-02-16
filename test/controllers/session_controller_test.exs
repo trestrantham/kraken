@@ -5,13 +5,13 @@ defmodule Kraken.SessionControllerTest do
     {:ok, %{user: insert_user}}
   end
 
-  test "GET :new when not logged in" do
+  test "log in page renders when not currently logged in" do
     conn = get conn, session_path(conn, :new)
 
     assert html_response(conn, 200) =~ "Log in to Kraken"
   end
 
-  test "GET :new when logged in", %{user: user} do
+  test "log in page redirects to the dashboard if already logged on", %{user: user} do
     conn =
       user
       |> guardian_login
@@ -20,14 +20,24 @@ defmodule Kraken.SessionControllerTest do
     assert redirected_to(conn, 302) == dashboard_path(conn, :index)
   end
 
-  test "POST :create when not logged in", %{user: user} do
-    conn = post conn, session_path(conn, :create), %{session: %{email: user.email, password: "supersecret"}}
+  test "log in page with valid params redirects to dashboard", %{user: user} do
+    assert Guardian.Plug.current_resource(conn) == nil
+
+    login_params = %{session: %{email: user.email, password: "supersecret"}}
+    conn = post conn, session_path(conn, :create), login_params
 
     assert redirected_to(conn, 302) == dashboard_path(conn, :index)
     assert Guardian.Plug.current_resource(conn).id == user.id
   end
 
-  test "DELETE :destroy logs out the user when logged in", %{user: user} do
+  test "log in page with invalid params shows error" do
+    login_params = %{session: %{email: "notvalid", password: "short"}}
+    conn = post conn, session_path(conn, :create), login_params
+
+    assert html_response(conn, 200) =~ "Could not log in with those credentials."
+  end
+
+  test "log out empties the current user", %{user: user} do
     conn =
       user
       |> guardian_login
@@ -40,7 +50,7 @@ defmodule Kraken.SessionControllerTest do
     assert Guardian.Plug.current_resource(conn) == nil
   end
 
-  test "DELETE :destroy redirects to login when not logged in" do
+  test "log out page redirects to login when not logged in" do
     assert Guardian.Plug.current_resource(conn) == nil
 
     conn = delete recycle(conn), session_path(conn, :destroy)

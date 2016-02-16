@@ -35,10 +35,10 @@ defmodule Kraken.ConnCase do
       # and get the session fetched.
       def guardian_login(user, token \\ :token, opts \\ []) do
         conn()
-        |> bypass_through(Kraken.Router, [:browser])
+        |> bypass_through(Kraken.Router, [:browser, :browser_auth])
         |> get("/")
         |> Guardian.Plug.sign_in(user, token, opts)
-        |> send_resp(200, "Flush the session yo")
+        |> send_resp(200, "Flush the session")
         |> recycle()
       end
     end
