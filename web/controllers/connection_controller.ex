@@ -8,6 +8,7 @@ defmodule Kraken.ConnectionController do
   use Guardian.Phoenix.Controller
 
   plug Ueberauth
+  plug Guardian.Plug.EnsureAuthenticated, [handler: Kraken.ControllerHelper] when action in [:index]
 
   alias Kraken.AddConnection
 
@@ -47,7 +48,7 @@ defmodule Kraken.ConnectionController do
   defp connections(nil) do
     Kraken.Provider.all
     |> Enum.map(fn(provider) ->
-      state = provider[:state] || "available"
+      state = provider.state || "available"
       Map.merge(provider, %{state: state})
     end)
   end
