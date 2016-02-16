@@ -12,11 +12,13 @@ defmodule Kraken.UserTest do
         password_hash: "secret"
       }
     )
+
     assert changeset.valid?
   end
 
   test "changeset with invalid attributes" do
     changeset = User.changeset(%User{}, %{})
+
     refute changeset.valid?
   end
 
@@ -29,11 +31,13 @@ defmodule Kraken.UserTest do
         password: "secret1"
       }
     )
+
     assert changeset.valid?
   end
 
   test "registration_changeset with invalid attributes" do
     changeset = User.registration_changeset(%User{}, %{})
+
     refute changeset.valid?
   end
 end

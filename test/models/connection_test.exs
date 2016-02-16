@@ -13,11 +13,13 @@ defmodule Kraken.ConnectionTest do
 
   test "changeset with valid attributes" do
     changeset = Connection.changeset(%Connection{}, @valid_attrs)
+
     assert changeset.valid?
   end
 
   test "changeset with invalid attributes" do
     changeset = Connection.changeset(%Connection{}, @invalid_attrs)
+
     refute changeset.valid?
   end
 end
