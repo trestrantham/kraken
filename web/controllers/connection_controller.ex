@@ -71,11 +71,11 @@ defmodule Kraken.ConnectionController do
     connection =
       user_connections
       |> Enum.find(fn(c) ->
-        c.provider == String.downcase(provider)
+        c.provider == String.downcase(provider.name)
       end)
 
     if connection do
-      if Kraken.User.expired?(connection) do
+      if Kraken.Connection.expired?(connection) do
         state = "expired"
       else
         state = "connected"
