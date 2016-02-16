@@ -12,4 +12,10 @@ defmodule Kraken.TestHelpers do
     |> User.registration_changeset(changes)
     |> Repo.insert!()
   end
+
+  def insert_connection(user, attrs \\ %{}) do
+    user
+    |> Ecto.build_assoc(:connections, attrs)
+    |> Repo.insert!()
+  end
 end
