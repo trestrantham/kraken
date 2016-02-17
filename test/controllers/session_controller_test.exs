@@ -1,26 +1,15 @@
 defmodule Kraken.SessionControllerTest do
   use Kraken.ConnCase
 
-  setup %{conn: conn} = config do
-    if email = config[:login_as] do
-      user = insert_user(email: email)
-      conn = guardian_login(user)
-
-      {:ok, conn: conn, user: user}
-    else
-      :ok
-    end
-  end
-
   test "renders log in form" do
     conn = get conn, session_path(conn, :new)
 
     assert html_response(conn, 200) =~ "Log in to Kraken"
   end
 
-  @tag login_as: "sven@rivendell.com"
-  test "redirects if logged on", %{conn: conn, user: _user} do
-    conn = get(conn, session_path(conn, :new))
+  @tag :logged_in
+  test "redirects if logged on", %{conn: conn} do
+    conn = get conn, session_path(conn, :new)
 
     assert redirected_to(conn, 302) == dashboard_path(conn, :index)
   end
@@ -43,9 +32,9 @@ defmodule Kraken.SessionControllerTest do
     assert html_response(conn, 200) =~ "Could not log in with those credentials."
   end
 
-  @tag login_as: "sven@rivendell.com"
+  @tag :logged_in
   test "log out empties the current user", %{conn: conn, user: user} do
-    conn = get(conn, "/")
+    conn = get conn, "/"
 
     assert Guardian.Plug.current_resource(conn).id == user.id
 

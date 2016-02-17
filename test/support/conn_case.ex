@@ -41,6 +41,17 @@ defmodule Kraken.ConnCase do
         |> send_resp(200, "Flush the session")
         |> recycle()
       end
+
+      setup %{conn: conn} = config do
+        if config[:logged_in] do
+          user = insert_user(email: Faker.Internet.email)
+          conn = guardian_login(user)
+
+          {:ok, conn: conn, user: user}
+        else
+          :ok
+        end
+      end
     end
   end
 

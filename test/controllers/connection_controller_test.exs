@@ -1,29 +1,46 @@
 defmodule Kraken.ConnectionControllerTest do
   use Kraken.ConnCase
+  use Timex
 
-  setup %{conn: conn} = config do
-    if email = config[:login_as] do
-      user = insert_user(email: email)
-      conn = guardian_login(user)
+  alias Kraken.Provider
 
-      {:ok, conn: conn, user: user}
-    else
-      :ok
-    end
-  end
-
-  @tag login_as: "sven@rivendell.com"
-  test "lists all connections on index", %{conn: conn, user: user} do
-    insert_connection(user, %{provider: "fitbit"})
-    insert_connection(user, %{provider: "runkeeper"})
-    insert_connection(insert_user, %{provider: "strava"})
-
-    conn = get(conn, connection_path(conn, :index))
+  @tag :logged_in
+  test "lists all available connections on index", %{conn: conn} do
+    conn = get conn, connection_path(conn, :index)
 
     assert html_response(conn, 200) =~ ~r/Connections/
-    assert String.contains?(conn.resp_body, "fitbit")
-    assert String.contains?(conn.resp_body, "runkeeper")
-    # refute String.contains?(conn.resp_body, "strava")
+
+    for provider <- Provider.all do
+      assert String.contains?(conn.resp_body, provider.name)
+    end
+
+    assert String.contains?(conn.resp_body, "available")
+    refute String.contains?(conn.resp_body, "connected")
+    refute String.contains?(conn.resp_body, "expired")
+  end
+
+  @tag :logged_in
+  test "shows connected connections on index", %{conn: conn, user: user} do
+    provider = List.first(Provider.all)
+
+    insert_connection(user, %{provider: provider.name, expires_at: Date.now(:secs) + 10000})
+    conn = get  conn, connection_path(conn, :index)
+
+    assert html_response(conn, 200) =~ ~r/Connections/
+    assert String.contains?(conn.resp_body, "connected")
+    refute String.contains?(conn.resp_body, "expired")
+  end
+
+  @tag :logged_in
+  test "shows expired connections on index", %{conn: conn, user: user} do
+    provider = List.first(Provider.all)
+
+    insert_connection(user, %{provider: provider.name, expires_at: 0})
+    conn = get conn, connection_path(conn, :index)
+
+    assert html_response(conn, 200) =~ ~r/Connections/
+    assert String.contains?(conn.resp_body, "expired")
+    refute String.contains?(conn.resp_body, "connected")
   end
 
   test "requires authentication on all actions" do
