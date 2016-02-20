@@ -1,5 +1,6 @@
 defmodule Kraken.ConnectionTest do
   use Kraken.ModelCase, async: true
+  use Timex
 
   alias Kraken.Connection
 
@@ -21,5 +22,22 @@ defmodule Kraken.ConnectionTest do
     changeset = Connection.changeset(%Connection{}, @invalid_attrs)
 
     refute changeset.valid?
+  end
+
+  test "`expired?` returns correct boolean" do
+    expired = %Connection{expires_at: Date.now(:secs) - 10000}
+    not_expired = %Connection{expires_at: Date.now(:secs) + 10000}
+
+    assert Connection.expired?(expired)
+    refute Connection.expired?(not_expired)
+  end
+
+  test "`state` returns the parsed state" do
+    expired = %Connection{expires_at: Date.now(:secs) - 10000}
+    connected = %Connection{expires_at: Date.now(:secs) + 10000}
+
+    assert Connection.state(expired) == "expired"
+    assert Connection.state(connected) == "connected"
+    assert Connection.state(nil) == nil
   end
 end
