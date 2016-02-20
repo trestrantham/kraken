@@ -1,5 +1,5 @@
 defmodule Kraken.ConnectionTest do
-  use Kraken.ModelCase
+  use Kraken.ModelCase, async: true
 
   alias Kraken.Connection
 

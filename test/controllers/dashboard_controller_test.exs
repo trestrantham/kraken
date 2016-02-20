@@ -1,5 +1,5 @@
 defmodule Kraken.DashboardControllerTest do
-  use Kraken.ConnCase
+  use Kraken.ConnCase, async: true
 
   test "GET :index without being authenticated" do
     conn = get conn, dashboard_path(conn, :index)

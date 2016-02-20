@@ -1,5 +1,5 @@
 defmodule Kraken.UserTest do
-  use Kraken.ModelCase
+  use Kraken.ModelCase, async: true
 
   alias Kraken.User
 
