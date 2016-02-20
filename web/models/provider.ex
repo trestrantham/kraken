@@ -35,7 +35,7 @@ defmodule Kraken.Provider do
   end
 
   def for_name(name) do
-    @providers
+    all
     |> Enum.find(fn provider ->
       provider.name == name
     end)
