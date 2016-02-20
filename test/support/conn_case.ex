@@ -21,7 +21,6 @@ defmodule Kraken.ConnCase do
       use Phoenix.ConnTest
 
       alias Kraken.Repo
-      import Ecto.Model
       import Ecto.Query, only: [from: 2]
 
       import Kraken.Router.Helpers
@@ -55,10 +54,8 @@ defmodule Kraken.ConnCase do
     end
   end
 
-  setup tags do
-    unless tags[:async] do
-      Ecto.Adapters.SQL.restart_test_transaction(Kraken.Repo, [])
-    end
+  setup do
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Kraken.Repo)
 
     {:ok, conn: Phoenix.ConnTest.conn()}
   end

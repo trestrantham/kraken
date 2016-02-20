@@ -15,18 +15,10 @@ defmodule Kraken.Connection do
     timestamps
   end
 
-  @required_fields ~w(provider uid user_id token)
-  @optional_fields ~w(refresh_token expires_at)
-
-  @doc """
-  Creates a changeset based on the `model` and `params`.
-
-  If no params are provided, an invalid changeset is returned
-  with no validation performed.
-  """
-  def changeset(model, params \\ :empty) do
+  def changeset(model, params \\ :invalid) do
     model
-    |> cast(params, @required_fields, @optional_fields)
+    |> cast(params, [:user_id, :provider, :uid, :token, :refresh_token, :expires_at])
+    |> validate_required([:user_id, :provider, :uid, :token])
     |> foreign_key_constraint(:user_id)
     |> unique_constraint(:provider_uid)
   end

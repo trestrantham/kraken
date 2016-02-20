@@ -17,7 +17,7 @@ defmodule Kraken.ConnectionChannel do
         Connection
         |> Connection.for_user(user)
         |> Connection.for_provider(provider_name)
-        |> Repo.one
+        |> Repo.first
 
       if connection do
         state = Connection.state(connection)

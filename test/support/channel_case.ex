@@ -21,7 +21,6 @@ defmodule Kraken.ChannelCase do
       use Phoenix.ChannelTest
 
       alias Kraken.Repo
-      import Ecto.Model
       import Ecto.Query, only: [from: 2]
 
 
@@ -31,9 +30,7 @@ defmodule Kraken.ChannelCase do
   end
 
   setup tags do
-    unless tags[:async] do
-      Ecto.Adapters.SQL.restart_test_transaction(Kraken.Repo, [])
-    end
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Kraken.Repo)
 
     :ok
   end

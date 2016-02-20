@@ -7,7 +7,7 @@ defmodule Kraken.Auth do
     user =
       User
       |> where(email: ^email)
-      |> Repo.one
+      |> Repo.first
 
     password_match =
       if user do

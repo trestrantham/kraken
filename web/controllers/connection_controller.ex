@@ -56,7 +56,7 @@ defmodule Kraken.ConnectionController do
   defp providers(%Kraken.User{} = user) do
     user_connections =
       user
-      |> Ecto.Model.assoc(:connections)
+      |> Ecto.assoc(:connections)
       |> Repo.all
 
     Provider.all

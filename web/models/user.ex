@@ -17,12 +17,10 @@ defmodule Kraken.User do
     timestamps
   end
 
-  @required_fields ~w(name email)
-  @optional_fields ~w()
-
-  def changeset(model, params \\ :empty) do
+  def changeset(model, params \\ :invalid) do
     model
-    |> cast(params, @required_fields, @optional_fields)
+    |> cast(params, [:name, :email])
+    |> validate_required([:name, :email])
     |> validate_format(:email, ~r/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/, message: "address is invalid")
     |> unique_constraint(:email)
   end
@@ -30,7 +28,8 @@ defmodule Kraken.User do
   def registration_changeset(model, params) do
     model
     |> changeset(params)
-    |> cast(params, ~w(password), [])
+    |> cast(params, [:password])
+    |> validate_required([:password])
     |> validate_length(:password, min: 8, max: 100)
     |> put_pass_hash()
   end
