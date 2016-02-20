@@ -24,7 +24,7 @@ defmodule Kraken.User do
     model
     |> cast(params, @required_fields, @optional_fields)
     |> validate_format(:email, ~r/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/, message: "address is invalid")
-    |> unique_constraint(:email, message: "address already taken")
+    |> unique_constraint(:email)
   end
 
   def registration_changeset(model, params) do
