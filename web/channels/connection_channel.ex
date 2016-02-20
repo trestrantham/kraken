@@ -1,7 +1,7 @@
 defmodule Kraken.ConnectionChannel do
   use Phoenix.Channel
 
-  alias Kraken.{Connection,Provider}
+  alias Kraken.{Connection,Provider,Repo}
 
   def join("connections:" <> _topic_name, _auth_msg, socket) do
     {:ok, socket}
