@@ -1,4 +1,4 @@
 <br>
 <br>
 <br>
-<div id="connections" data-connections="<%= connections_json(@connections) %>"></div>
+<div id="connections" data-connections="<%= providers_json(@providers) %>"></div>

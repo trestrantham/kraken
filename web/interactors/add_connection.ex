@@ -38,7 +38,7 @@ defmodule Kraken.AddConnection do
 
   defp connection_from_auth(auth, user) do
     changes = Connection.changeset(
-      %Kraken.Connection{},
+      %Connection{},
       %{
         provider: to_string(auth.provider),
         uid: auth.uid,

@@ -1,8 +1,8 @@
 defmodule Kraken.ConnectionView do
   use Kraken.Web, :view
 
-  def connections_json(connections) do
-    connections
+  def providers_json(providers) do
+    providers
     |> Poison.encode!
   end
 end

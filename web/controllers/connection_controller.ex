@@ -10,24 +10,28 @@ defmodule Kraken.ConnectionController do
   plug Ueberauth
   plug Guardian.Plug.EnsureAuthenticated, [handler: Kraken.ControllerHelper] when action in [:index]
 
-  alias Kraken.AddConnection
+  alias Kraken.{AddConnection,Connection,Provider}
 
   def index(conn, _params, current_user, _claims) do
     render conn, "index.html",
       current_user: current_user,
-      connections: connections(current_user)
+      providers: providers(current_user)
   end
 
   def request(conn, _params, current_user, _claims) do
     render conn, "index.html",
       current_user: current_user,
-      connections: connections(current_user)
+      providers: providers(current_user)
   end
 
   def callback(%Plug.Conn{assigns: %{ueberauth_failure: fails}} = conn, _params, current_user, _claims) do
     conn
     |> put_flash(:error, hd(fails.errors).message)
-    |> render("index.html", current_user: current_user, connections: connections(current_user))
+    |> render(
+      "index.html",
+      current_user: current_user,
+      providers: providers(current_user)
+    )
   end
 
   def callback(%Plug.Conn{assigns: %{ueberauth_auth: auth}} = conn, _params, current_user, _claims) do
@@ -42,32 +46,26 @@ defmodule Kraken.ConnectionController do
 
     render conn, "index.html",
       current_user: current_user,
-      connections: connections(current_user)
+      providers: providers(current_user)
   end
 
-  defp connections(nil) do
-    Kraken.Provider.all
-    |> Enum.map(fn(provider) ->
-      state = provider.state || "available"
-      Map.merge(provider, %{state: state})
-    end)
+  defp providers(nil) do
+    Provider.all
   end
 
-  defp connections(%Kraken.User{} = user) do
+  defp providers(%Kraken.User{} = user) do
     user_connections =
       user
       |> Ecto.Model.assoc(:connections)
       |> Repo.all
 
-    Kraken.Provider.all
+    Provider.all
     |> Enum.map(fn(provider) ->
       lookup_connection(provider, user_connections)
     end)
   end
 
   defp lookup_connection(provider, user_connections) do
-    state = provider.state || "available"
-
     connection =
       user_connections
       |> Enum.find(fn(c) ->
@@ -75,13 +73,10 @@ defmodule Kraken.ConnectionController do
       end)
 
     if connection do
-      if Kraken.Connection.expired?(connection) do
-        state = "expired"
-      else
-        state = "connected"
-      end
+      state = Connection.state(connection)
+      provider = Map.merge(provider, %{state: state})
     end
 
-    Map.merge(provider, %{state: state})
+    provider
   end
 end

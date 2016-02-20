@@ -13,7 +13,7 @@ defmodule Kraken.ConnectionViewTest do
       "index.html",
       conn: conn,
       current_user: insert_user,
-      connections: providers
+      providers: providers
     )
 
     assert String.contains?(content, "fitbit")

@@ -9,12 +9,12 @@ defmodule Kraken.Provider do
     %{
       name: "fitbit",
       message: "steps, weight",
-      state: nil
+      state: "available"
     },
     %{
       name: "runkeeper",
       message: "workouts, weight",
-      state: nil
+      state: "coming_soon"
     },
     %{
       name: "strava",
