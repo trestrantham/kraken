@@ -1,10 +1,6 @@
 defmodule Kraken.User do
   use Kraken.Web, :model
 
-  import Ecto.Query
-
-  alias Kraken.Repo
-
   schema "users" do
     field :name, :string
     field :email, :string
