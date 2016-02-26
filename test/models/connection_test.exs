@@ -5,7 +5,7 @@ defmodule Kraken.ConnectionTest do
   alias Kraken.Connection
 
   @valid_attrs %{
-    provider: "some content",
+    provider_id: 42,
     uid: "some content",
     user_id: 42,
     token: "some token"

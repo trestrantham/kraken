@@ -49,34 +49,16 @@ defmodule Kraken.ConnectionController do
       providers: providers(current_user)
   end
 
-  defp providers(nil) do
-    Provider.all
-  end
-
-  defp providers(%Kraken.User{} = user) do
-    user_connections =
-      user
-      |> Ecto.assoc(:connections)
-      |> Repo.all
-
-    Provider.all
-    |> Enum.map(fn(provider) ->
-      lookup_connection(provider, user_connections)
+  def providers(user) do
+    Provider
+    |> Provider.status_for_user(user)
+    |> Repo.all
+    |> Enum.map(fn provider ->
+      %{
+        name: elem(provider, 0),
+        message: elem(provider, 1),
+        state: elem(provider, 2)
+      }
     end)
-  end
-
-  defp lookup_connection(provider, user_connections) do
-    connection =
-      user_connections
-      |> Enum.find(fn(c) ->
-        c.provider == String.downcase(provider.name)
-      end)
-
-    if connection do
-      state = Connection.state(connection)
-      provider = Map.merge(provider, %{state: state})
-    end
-
-    provider
   end
 end

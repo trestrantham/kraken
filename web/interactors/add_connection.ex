@@ -14,7 +14,7 @@ defmodule Kraken.AddConnection do
   end
 
   defp auth_and_validate(auth) do
-    case Repo.get_by(Connection, uid: auth.uid, provider: to_string(auth.provider)) do
+    case Repo.get_by(Connection, uid: auth.uid, provider_id: provider_id(auth.provider)) do
       nil -> {:error, :not_found}
       connection ->
         if connection.token == auth.credentials.token do
@@ -40,7 +40,7 @@ defmodule Kraken.AddConnection do
     changes = Connection.changeset(
       %Connection{},
       %{
-        provider: to_string(auth.provider),
+        provider_id: provider_id(auth.provider),
         uid: auth.uid,
         token: auth.credentials.token,
         refresh_token: auth.credentials.refresh_token,
@@ -56,5 +56,15 @@ defmodule Kraken.AddConnection do
         Repo.rollback(reason)
         {:error, reason}
     end
+  end
+
+  defp provider_id(nil), do: nil
+  defp provider_id(provider_name) do
+    provider =
+      Provider
+      |> Provider.for_name(provider_name)
+      |> Repo.first
+
+    provider.id
   end
 end

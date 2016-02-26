@@ -7,16 +7,19 @@ defmodule Kraken.ConnectionRepoTest do
   setup do
     user1 = insert_user(%{name: "Kristoff"})
     user2 = insert_user(%{name: "Sven"})
-
-    connection1 = insert_connection(user1, %{provider: "NSA"})
-    connection2 = insert_connection(user2, %{provider: "NSA"})
-    connection3 = insert_connection(user2, %{provider: "FBI"})
+    provider1 = insert_provider(%{name: "NSA"})
+    provider2 = insert_provider(%{name: "FBI"})
+    connection1 = insert_connection(user1, provider1)
+    connection2 = insert_connection(user2, provider1)
+    connection3 = insert_connection(user2, provider2)
 
     {
       :ok,
       context: %{
         user1: user1,
         user2: user2,
+        provider1: provider1,
+        provider2: provider2,
         connection1: connection1,
         connection2: connection2,
         connection3: connection3
@@ -44,7 +47,7 @@ defmodule Kraken.ConnectionRepoTest do
   test "`for_provider` returns connections for the given provider", %{context: context} do
     result =
       Connection
-      |> Connection.for_provider("NSA")
+      |> Connection.for_provider(context.provider1)
       |> Repo.all
       |> Enum.sort_by(&(&1))
       
@@ -52,7 +55,7 @@ defmodule Kraken.ConnectionRepoTest do
 
     result =
       Connection
-      |> Connection.for_provider("FBI")
+      |> Connection.for_provider(context.provider2)
       |> Repo.all
       
     assert result == [context.connection3]

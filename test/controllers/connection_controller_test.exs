@@ -6,11 +6,13 @@ defmodule Kraken.ConnectionControllerTest do
 
   @tag :logged_in
   test "lists all available connections on index", %{conn: conn} do
+    insert_provider
+
     conn = get conn, connection_path(conn, :index)
 
     assert html_response(conn, 200) =~ ~r/Connections/
 
-    for provider <- Provider.all do
+    for provider <- Repo.all(Provider) do
       assert String.contains?(conn.resp_body, provider.name)
     end
 
@@ -21,9 +23,9 @@ defmodule Kraken.ConnectionControllerTest do
 
   @tag :logged_in
   test "shows connected connections on index", %{conn: conn, user: user} do
-    provider = List.first(Provider.all)
+    provider = insert_provider
+    insert_connection(user, provider, %{expires_at: Date.now(:secs) + 10000})
 
-    insert_connection(user, %{provider: provider.name, expires_at: Date.now(:secs) + 10000})
     conn = get  conn, connection_path(conn, :index)
 
     assert html_response(conn, 200) =~ ~r/Connections/
@@ -33,9 +35,9 @@ defmodule Kraken.ConnectionControllerTest do
 
   @tag :logged_in
   test "shows expired connections on index", %{conn: conn, user: user} do
-    provider = List.first(Provider.all)
+    provider = insert_provider
+    insert_connection(user, provider, %{expires_at: 0})
 
-    insert_connection(user, %{provider: provider.name, expires_at: 0})
     conn = get conn, connection_path(conn, :index)
 
     assert html_response(conn, 200) =~ ~r/Connections/

@@ -3,17 +3,15 @@ defmodule Kraken.ConnectionViewTest do
   import Phoenix.View
 
   test "renders index.html", %{conn: conn} do
-    providers = [
-      %Kraken.Provider{name: "fitbit", message: "steps"},
-      %Kraken.Provider{name: "runkeeper", message: "workouts"}
-    ]
-
     content = render_to_string(
       Kraken.ConnectionView,
       "index.html",
       conn: conn,
       current_user: insert_user,
-      providers: providers
+      providers: [
+        %{name: "fitbit", message: "steps", state: "available"},
+        %{name: "runkeeper", message: "workouts", state: "available"}
+      ]
     )
 
     assert String.contains?(content, "fitbit")
