@@ -7,7 +7,7 @@
   "cowboy": {:hex, :cowboy, "1.0.4"},
   "cowlib": {:hex, :cowlib, "1.0.2"},
   "credo": {:hex, :credo, "0.3.3"},
-  "db_connection": {:hex, :db_connection, "0.2.3"},
+  "db_connection": {:hex, :db_connection, "0.2.4"},
   "decimal": {:hex, :decimal, "1.1.1"},
   "ecto": {:git, "https://github.com/elixir-lang/ecto.git", "3bd508729fbb12578655d65bcbd98331aef8fe0b", []},
   "excoveralls": {:hex, :excoveralls, "0.5.1"},
