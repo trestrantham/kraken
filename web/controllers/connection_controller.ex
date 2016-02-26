@@ -10,7 +10,7 @@ defmodule Kraken.ConnectionController do
   plug Ueberauth
   plug Guardian.Plug.EnsureAuthenticated, [handler: Kraken.ControllerHelper] when action in [:index]
 
-  alias Kraken.{AddConnection,Connection,Provider}
+  alias Kraken.{AddConnection,Provider}
 
   def index(conn, _params, current_user, _claims) do
     render conn, "index.html",
