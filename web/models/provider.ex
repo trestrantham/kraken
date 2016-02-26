@@ -1,43 +1,36 @@
 defmodule Kraken.Provider do
-  defstruct name: nil, message: nil, state: nil
+  use Kraken.Web, :model
 
-  @type t :: %__MODULE__{
-    name: binary, message: binary, state: binary
-  }
+  alias Kraken.{Connection,Provider,User}
 
-  @providers [
-    %{
-      name: "fitbit",
-      message: "steps, weight",
-      state: "available"
-    },
-    %{
-      name: "runkeeper",
-      message: "workouts, weight",
-      state: "coming_soon"
-    },
-    %{
-      name: "strava",
-      message: "workouts, weight",
-      state: "coming_soon"
-    }
-  ]
+  schema "providers" do
+    field :name, :string
+    field :message, :string
+    field :state, :string
 
-  def all do
-    @providers
-    |> Enum.map(fn provider ->
-        %Kraken.Provider{
-          name: provider.name,
-          message: provider.message,
-          state: provider.state
-        }
-      end)
+    has_many :connections, Connection
+
+    timestamps
   end
 
-  def for_name(name) do
-    all
-    |> Enum.find(fn provider ->
-      provider.name == name
-    end)
+  def changeset(model, params \\ :invalid) do
+    model
+    |> cast(params, [:name, :message, :state])
+    |> validate_required([:name, :message, :state])
+  end
+
+  def for_name(query, name \\ "") do
+    query |> where(name: ^name)
+  end
+
+  def status_for_user(query, %User{} = user) do
+    query
+    |> join(:left, [p], c in Connection, p.id == c.provider_id and c.user_id == ^user.id)
+    |> select([p, c], {p.name, p.message, fragment("CASE WHEN ? IS NULL THEN ? WHEN extract(epoch from now()) <= ? THEN 'connected' ELSE 'expired' END AS state", c.expires_at, p.state, c.expires_at)})
+  end
+
+  def status_for_user(query, _) do
+    query
+    |> select([p], {p.name, p.message, p.state})
   end
 end
