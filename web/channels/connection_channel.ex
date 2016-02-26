@@ -9,7 +9,7 @@ defmodule Kraken.ConnectionChannel do
 
   def handle_in("loaded", %{"provider" => provider_name}, socket) do
     user = socket.assigns.current_user
-    provider = provider_state(provider_state, user)
+    provider = provider_state(provider_name, user)
 
     if user && provider do
       broadcast! socket, "update", provider
