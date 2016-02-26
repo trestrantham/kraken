@@ -9,25 +9,26 @@ defmodule Kraken.ConnectionChannel do
 
   def handle_in("loaded", %{"provider" => provider_name}, socket) do
     user = socket.assigns.current_user
-    provider = Provider.for_name(provider_name)
-    state = provider.state || "available"
+    provider = provider_state(provider_state, user)
 
     if user && provider do
-      connection =
-        Connection
-        |> Connection.for_user(user)
-        |> Connection.for_provider(provider_name)
-        |> Repo.first
-
-      if connection do
-        state = Connection.state(connection)
-      end
-
-      provider = Map.merge(provider, %{state: state})
-
       broadcast! socket, "update", provider
     end
 
     {:noreply, socket}
+  end
+
+  defp provider_state(name, user) do
+    provider =
+      Provider
+      |> Provider.for_name(name)
+      |> Provider.status_for_user(user)
+      |> Repo.first
+
+    %{
+      name: elem(provider, 0),
+      message: elem(provider, 1),
+      state: elem(provider, 2)
+    }
   end
 end

@@ -49,7 +49,7 @@ defmodule Kraken.ConnectionController do
       providers: providers(current_user)
   end
 
-  def providers(user) do
+  defp providers(user) do
     Provider
     |> Provider.status_for_user(user)
     |> Repo.all
