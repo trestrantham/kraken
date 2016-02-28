@@ -53,12 +53,5 @@ defmodule Kraken.ConnectionController do
     Provider
     |> Provider.status_for_user(user)
     |> Repo.all
-    |> Enum.map(fn provider ->
-      %{
-        name: elem(provider, 0),
-        message: elem(provider, 1),
-        state: elem(provider, 2)
-      }
-    end)
   end
 end

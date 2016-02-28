@@ -47,9 +47,9 @@ defmodule Kraken.ProviderRepoTest do
       |> Repo.all
 
     assert result == [
-      {"NSA", "foo", "available"},
-      {"FBI", "bar", "available"},
-      {"CIA", "baz", "available"}
+      %{name: "NSA", message: "foo", state: "available"},
+      %{name: "FBI", message: "bar", state: "available"},
+      %{name: "CIA", message: "baz", state: "available"}
     ]
   end
 
@@ -60,9 +60,9 @@ defmodule Kraken.ProviderRepoTest do
       |> Repo.all
 
     assert result == [
-      {"NSA", "foo", "connected"},
-      {"FBI", "bar", "connected"},
-      {"CIA", "baz", "available"}
+      %{name: "NSA", message: "foo", state: "connected"},
+      %{name: "FBI", message: "bar", state: "connected"},
+      %{name: "CIA", message: "baz", state: "available"}
     ]
   end
 end
