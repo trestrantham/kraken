@@ -20,6 +20,7 @@ defmodule Kraken.Provider do
   end
 
   def for_name(query, name \\ "") do
+    name = to_string(name)
     query |> where(name: ^name)
   end
 
