@@ -1,7 +1,7 @@
 defmodule Kraken.ConnectionChannel do
   use Phoenix.Channel
 
-  alias Kraken.{Connection,Provider,Repo}
+  alias Kraken.{Provider,Repo}
 
   def join("connections:" <> _topic_name, _auth_msg, socket) do
     {:ok, socket}
@@ -19,16 +19,9 @@ defmodule Kraken.ConnectionChannel do
   end
 
   defp provider_state(name, user) do
-    provider =
-      Provider
-      |> Provider.for_name(name)
-      |> Provider.status_for_user(user)
-      |> Repo.first
-
-    %{
-      name: elem(provider, 0),
-      message: elem(provider, 1),
-      state: elem(provider, 2)
-    }
+    Provider
+    |> Provider.for_name(name)
+    |> Provider.status_for_user(user)
+    |> Repo.first
   end
 end
