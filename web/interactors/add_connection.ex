@@ -1,15 +1,22 @@
 defmodule Kraken.AddConnection do
-  alias Kraken.{Connection,Repo}
+  import Ecto.Query, only: [select: 3]
+
+  alias Kraken.{Connection,Provider,Repo}
 
   def call(auth, user) do
     case auth_and_validate(auth) do
-      {:error, :not_found} -> connection_from_auth(auth, user)
-      {:error, reason}     -> {:error, reason}
-      connection           ->
+      {:ok, connection} ->
         if Connection.expired?(connection) do
           replace_connection(connection, auth, user)
+        else
+          {:ok, connection}
         end
-        {:ok, connection}
+
+      {:error, :not_found} ->
+        connection_from_auth(auth, user)
+
+      {:error, reason} ->
+        {:error, reason}
     end
   end
 
@@ -18,24 +25,31 @@ defmodule Kraken.AddConnection do
       nil -> {:error, :not_found}
       connection ->
         if connection.token == auth.credentials.token do
-          connection
+          {:ok, connection}
         else
           {:error, :token_mismatch}
         end
     end
   end
 
+  # {:ok, connection} on success
+  # {:error, reason} on failure
   defp replace_connection(connection, auth, user) do
-    case Repo.transaction(fn ->
+    Repo.transaction(fn ->
       Repo.delete(connection)
-      connection_from_auth(user, auth)
-      user
-    end) do
-      {:ok, user}      -> {:ok, user}
-      {:error, reason} -> {:error, reason}
-    end
+
+      case connection_from_auth(auth, user) do
+        {:ok, connection} ->
+          {:ok, connection}
+        {:error, reason} ->
+          Repo.rollback
+          {:error, reason}
+      end
+    end)
   end
 
+  # {:ok, connection} on success
+  # {:error, reason} on failure
   defp connection_from_auth(auth, user) do
     changes = Connection.changeset(
       %Connection{},
@@ -49,22 +63,14 @@ defmodule Kraken.AddConnection do
       }
     )
 
-    case Repo.insert(changes) do
-      {:ok, the_auth} ->
-        {:ok, the_auth}
-      {:error, reason} ->
-        Repo.rollback(reason)
-        {:error, reason}
-    end
+    Repo.insert(changes)
   end
 
   defp provider_id(nil), do: nil
   defp provider_id(provider_name) do
-    provider =
-      Provider
-      |> Provider.for_name(provider_name)
-      |> Repo.first
-
-    provider.id
+    Provider
+    |> Provider.for_name(provider_name)
+    |> select([p], p.id)
+    |> Repo.first
   end
 end

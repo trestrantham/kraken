@@ -37,8 +37,10 @@ defmodule Kraken.ConnectionController do
   def callback(%Plug.Conn{assigns: %{ueberauth_auth: auth}} = conn, _params, current_user, _claims) do
     case AddConnection.call(auth, current_user) do
       {:ok, connection} ->
+        connection = Repo.preload connection, :provider
+
         conn
-        |> put_flash(:info, "#{connection.provider} was added successfully.")
+        |> put_flash(:info, "#{connection.provider.name} was added successfully.")
       {:error, _errors} ->
         conn
         |> put_flash(:error, "There was a problem creating your account. Please check the highlighted fields below.")
