@@ -117,7 +117,7 @@ let ConnectionAction = React.createClass({
                   Connect
                 </a>
               );
-            case "expired":
+            case "disconnected":
               return(
                 <a className="btn btn-primary" href={`/connection/${this.props.name.toLowerCase()}`}>
                   Reconnect

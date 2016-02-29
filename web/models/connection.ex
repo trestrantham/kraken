@@ -38,7 +38,7 @@ defmodule Kraken.Connection do
 
   def state(%Kraken.Connection{} = connection) do
     if expired?(connection) do
-      "expired"
+      "disconnected"
     else
       "connected"
     end

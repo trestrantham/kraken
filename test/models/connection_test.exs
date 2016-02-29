@@ -36,7 +36,7 @@ defmodule Kraken.ConnectionTest do
     expired = %Connection{expires_at: Date.now(:secs) - 10000}
     connected = %Connection{expires_at: Date.now(:secs) + 10000}
 
-    assert Connection.state(expired) == "expired"
+    assert Connection.state(expired) == "disconnected"
     assert Connection.state(connected) == "connected"
     assert Connection.state(nil) == nil
   end
