@@ -19,11 +19,14 @@ defmodule Kraken.Provider do
     |> validate_required([:name, :message, :state])
   end
 
-  def for_name(query, name \\ "") do
+  def for_name(name), do: for_name(Provider, name)
+  def for_name(query, name) do
     name = to_string(name)
     query |> where(name: ^name)
   end
 
+  def status_for_user(%User{} = user), do: status_for_user(Provider, user)
+  def status_for_user(_), do: status_for_user(Provider, nil)
   def status_for_user(query, %User{} = user) do
     query
     |> join(:left, [p], c in Connection, p.id == c.provider_id and c.user_id == ^user.id)
