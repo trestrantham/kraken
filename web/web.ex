@@ -23,6 +23,9 @@ defmodule Kraken.Web do
       import Ecto
       import Ecto.Changeset
       import Ecto.Query
+
+      @primary_key {:id, Ecto.UUID, read_after_writes: true}
+      @foreign_key_type Ecto.UUID
     end
   end
 
