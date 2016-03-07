@@ -9,12 +9,9 @@ defmodule Kraken.UserSocket do
   # transport :longpoll, Phoenix.Transports.LongPoll
 
   def connect(%{"token" => token}, socket) do
-    case Phoenix.Token.verify(socket, "user socket", token, max_age: 1209600) do
+    case Phoenix.Token.verify(socket, "user socket", token, max_age: 3600) do
       {:ok, user_id} ->
-        socket =
-          socket
-          |> assign(:current_user, Repo.get!(User, user_id))
-          |> assign(:user_token, token)
+        socket = assign(socket, :current_user, Repo.get!(User, user_id))
 
         {:ok, socket}
       {:error, _} ->

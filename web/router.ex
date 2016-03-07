@@ -43,7 +43,10 @@ defmodule Kraken.Router do
 
     if current_user do
       token = Phoenix.Token.sign(conn, "user socket", current_user.id)
-      assign(conn, :user_token, token)
+
+      conn
+      |> assign(:user_id, current_user.id)
+      |> assign(:user_token, token)
     else
       conn
     end

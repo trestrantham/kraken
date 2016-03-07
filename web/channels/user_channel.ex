@@ -3,8 +3,8 @@ defmodule Kraken.UserChannel do
 
   alias Kraken.{Provider,Repo,UpdateConnection}
 
-  def join("users:" <> user_token, _auth_msg, socket) do
-    if socket.assigns.user_token == user_token do
+  def join("users:" <> user_id, _auth_msg, socket) do
+    if socket.assigns.current_user.id == user_id do
       {:ok, socket}
     else
       {:error, %{reason: "unauthorized"}}
