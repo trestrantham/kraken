@@ -7,7 +7,8 @@ defmodule Kraken.Auth do
     user =
       User
       |> where(email: ^email)
-      |> Repo.first
+      |> Ecto.Query.first
+      |> Repo.one
 
     password_match =
       if user do

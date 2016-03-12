@@ -13,7 +13,7 @@ defmodule Kraken.Provider do
     timestamps
   end
 
-  def changeset(model, params \\ :invalid) do
+  def changeset(model, params \\ %{}) do
     model
     |> cast(params, [:name, :message, :state])
     |> validate_required([:name, :message, :state])

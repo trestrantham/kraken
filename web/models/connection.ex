@@ -15,7 +15,7 @@ defmodule Kraken.Connection do
     timestamps
   end
 
-  def changeset(model, params \\ :invalid) do
+  def changeset(model, params \\ %{}) do
     model
     |> cast(params, [:user_id, :provider_id, :uid, :token, :refresh_token, :expires_at])
     |> validate_required([:user_id, :provider_id, :uid, :token])
