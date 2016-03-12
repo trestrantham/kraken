@@ -37,13 +37,6 @@ let Providers = React.createClass({
         parentNode.removeAttribute(attribute.name);
       }
     }, this);
-
-    channel.on("connections:update", payload => {
-      providers = $.extend({}, this.state.providers)
-      providers[payload.name] = payload
-
-      this.setState({ providers: providers })
-    })
   },
   render() {
     return(
@@ -59,20 +52,30 @@ let Providers = React.createClass({
 })
 
 let Provider = React.createClass({
+  getInitialState() {
+    return {
+      provider: this.props.provider
+    }
+  },
+  componentDidMount() {
+    channel.on(`${this.state.provider.name}:connection_update`, payload => {
+      this.setState({ provider: payload })
+    })
+  },
   render() {
     return(
       <div className="col-md-4">
         <div className="card indigo">
           <div className="card-header">
             <div className="card-title">
-              {this.props.provider.state}
+              {this.state.provider.state}
               <i className="material-icons"></i>
             </div>
             <i className="fa fa-anchor"></i>
           </div>
-          <div className="card-content">{titleize(this.props.provider.name)}</div>
+          <div className="card-content">{titleize(this.state.provider.name)}</div>
           <div className="card-footer">
-            <ProviderAction provider={this.props.provider} />
+            <ProviderAction provider={this.state.provider} />
           </div>
         </div>
       </div>
