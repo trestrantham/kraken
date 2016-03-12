@@ -33,7 +33,7 @@ defmodule Kraken.ConnectionRepoTest do
       |> Connection.for_user(context.user1)
       |> Repo.all
       
-    assert result == [context.connection1]
+    assert comparison_values(result) == [comparison_value(context.connection1)]
 
     result =
       Connection
@@ -41,7 +41,7 @@ defmodule Kraken.ConnectionRepoTest do
       |> Repo.all
       |> Enum.sort_by(&(&1))
       
-    assert result == [context.connection2, context.connection3]
+    assert comparison_values(result) == comparison_values([context.connection2, context.connection3])
   end
 
   test "`for_provider` returns connections for the given provider", %{context: context} do
@@ -51,13 +51,28 @@ defmodule Kraken.ConnectionRepoTest do
       |> Repo.all
       |> Enum.sort_by(&(&1))
       
-    assert result == [context.connection1, context.connection2]
+    assert comparison_values(result) == comparison_values([context.connection1, context.connection2])
 
     result =
       Connection
       |> Connection.for_provider(context.provider2)
       |> Repo.all
       
-    assert result == [context.connection3]
+    assert comparison_values(result) == comparison_values([context.connection3])
+  end
+
+  defp comparison_value(connection) do
+    %{
+      provider_id: connection.provider_id,
+      token: connection.token,
+      refresh_token: connection.refresh_token
+    }
+  end
+  defp comparison_values(connections) do
+    connections
+    |> Enum.map(fn connection ->
+      comparison_value(connection)
+    end)
+    |> Enum.sort
   end
 end

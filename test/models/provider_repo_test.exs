@@ -37,7 +37,7 @@ defmodule Kraken.ProviderRepoTest do
       |> Provider.for_name("FBI")
       |> Repo.all
       
-    assert result == [context.provider2]
+    assert comparison_values(result) == comparison_values([context.provider2])
   end
 
   test "`status_for_user` returns just providers when no user is given", %{context: _context} do
@@ -46,11 +46,13 @@ defmodule Kraken.ProviderRepoTest do
       |> Provider.status_for_user(nil)
       |> Repo.all
 
-    assert result == [
-      %{name: "NSA", message: "foo", state: "available"},
-      %{name: "FBI", message: "bar", state: "available"},
-      %{name: "CIA", message: "baz", state: "available"}
-    ]
+    assert comparison_values(result) == comparison_values(
+      [
+        %{name: "NSA", message: "foo", state: "available"},
+        %{name: "FBI", message: "bar", state: "available"},
+        %{name: "CIA", message: "baz", state: "available"}
+      ]
+    )
   end
 
   test "`status_for_user` returns providers with a state when user is given", %{context: context} do
@@ -59,10 +61,27 @@ defmodule Kraken.ProviderRepoTest do
       |> Provider.status_for_user(context.user)
       |> Repo.all
 
-    assert result == [
-      %{name: "NSA", message: "foo", state: "connected"},
-      %{name: "FBI", message: "bar", state: "connected"},
-      %{name: "CIA", message: "baz", state: "available"}
-    ]
+    assert comparison_values(result) == comparison_values(
+      [
+        %{name: "NSA", message: "foo", state: "connected"},
+        %{name: "FBI", message: "bar", state: "connected"},
+        %{name: "CIA", message: "baz", state: "available"}
+      ]
+    )
+  end
+
+  defp comparison_value(provider) do
+    %{
+      name: provider.name,
+      message: provider.message,
+      state: provider.state
+    }
+  end
+  defp comparison_values(connections) do
+    connections
+    |> Enum.map(fn connection ->
+      comparison_value(connection)
+    end)
+    |> Enum.sort
   end
 end

@@ -5,9 +5,9 @@ defmodule Kraken.ConnectionTest do
   alias Kraken.Connection
 
   @valid_attrs %{
-    provider_id: 42,
+    provider_id: Ecto.UUID.generate,
     uid: "some content",
-    user_id: 42,
+    user_id: Ecto.UUID.generate,
     token: "some token"
   }
   @invalid_attrs %{}
