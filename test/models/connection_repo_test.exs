@@ -36,8 +36,21 @@ defmodule Kraken.ConnectionRepoTest do
     assert comparison_values(result) == [comparison_value(context.connection1)]
 
     result =
+      Connection.for_user(context.user1)
+      |> Repo.all
+      
+    assert comparison_values(result) == [comparison_value(context.connection1)]
+
+    result =
       Connection
       |> Connection.for_user(context.user2)
+      |> Repo.all
+      |> Enum.sort_by(&(&1))
+      
+    assert comparison_values(result) == comparison_values([context.connection2, context.connection3])
+
+    result =
+      Connection.for_user(context.user2)
       |> Repo.all
       |> Enum.sort_by(&(&1))
       
@@ -54,8 +67,51 @@ defmodule Kraken.ConnectionRepoTest do
     assert comparison_values(result) == comparison_values([context.connection1, context.connection2])
 
     result =
+      Connection.for_provider(context.provider1)
+      |> Repo.all
+      |> Enum.sort_by(&(&1))
+      
+    assert comparison_values(result) == comparison_values([context.connection1, context.connection2])
+
+    result =
       Connection
       |> Connection.for_provider(context.provider2)
+      |> Repo.all
+      
+    assert comparison_values(result) == comparison_values([context.connection3])
+
+    result =
+      Connection.for_provider(context.provider2)
+      |> Repo.all
+      
+    assert comparison_values(result) == comparison_values([context.connection3])
+  end
+
+  test "`for_provider_name` returns connections for the given provider name", %{context: context} do
+    result =
+      Connection
+      |> Connection.for_provider_name(context.provider1.name)
+      |> Repo.all
+      |> Enum.sort_by(&(&1))
+      
+    assert comparison_values(result) == comparison_values([context.connection1, context.connection2])
+
+    result =
+      Connection.for_provider_name(context.provider1.name)
+      |> Repo.all
+      |> Enum.sort_by(&(&1))
+      
+    assert comparison_values(result) == comparison_values([context.connection1, context.connection2])
+
+    result =
+      Connection
+      |> Connection.for_provider_name(context.provider2.name)
+      |> Repo.all
+      
+    assert comparison_values(result) == comparison_values([context.connection3])
+
+    result =
+      Connection.for_provider_name(context.provider2.name)
       |> Repo.all
       
     assert comparison_values(result) == comparison_values([context.connection3])

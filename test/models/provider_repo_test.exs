@@ -33,8 +33,20 @@ defmodule Kraken.ProviderRepoTest do
     assert result == [context.provider1]
 
     result =
+      Provider.for_name("NSA")
+      |> Repo.all
+      
+    assert result == [context.provider1]
+
+    result =
       Provider
       |> Provider.for_name("FBI")
+      |> Repo.all
+      
+    assert comparison_values(result) == comparison_values([context.provider2])
+
+    result =
+      Provider.for_name("FBI")
       |> Repo.all
       
     assert comparison_values(result) == comparison_values([context.provider2])
@@ -53,12 +65,36 @@ defmodule Kraken.ProviderRepoTest do
         %{name: "CIA", message: "baz", state: "available"}
       ]
     )
+
+    result =
+      Provider.status_for_user(nil)
+      |> Repo.all
+
+    assert comparison_values(result) == comparison_values(
+      [
+        %{name: "NSA", message: "foo", state: "available"},
+        %{name: "FBI", message: "bar", state: "available"},
+        %{name: "CIA", message: "baz", state: "available"}
+      ]
+    )
   end
 
   test "`status_for_user` returns providers with a state when user is given", %{context: context} do
     result =
       Provider
       |> Provider.status_for_user(context.user)
+      |> Repo.all
+
+    assert comparison_values(result) == comparison_values(
+      [
+        %{name: "NSA", message: "foo", state: "connected"},
+        %{name: "FBI", message: "bar", state: "connected"},
+        %{name: "CIA", message: "baz", state: "available"}
+      ]
+    )
+
+    result =
+      Provider.status_for_user(context.user)
       |> Repo.all
 
     assert comparison_values(result) == comparison_values(

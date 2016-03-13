@@ -23,7 +23,7 @@ defmodule Kraken.Connection do
     |> unique_constraint(:provider_uid)
   end
 
-  def for_user(%Kraken.User{} = user), do: for_user(Connection, user)
+  def for_user(%Kraken.User{} = user), do: for_user(Kraken.Connection, user)
   def for_user(query, %Kraken.User{} = user) do
     query |> where(user_id: ^user.id)
   end

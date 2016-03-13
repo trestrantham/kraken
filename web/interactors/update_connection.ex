@@ -7,7 +7,8 @@ defmodule Kraken.UpdateConnection do
     provider_name = to_string(provider_name)
 
     connection =
-      Connection.for_user(user)
+      user
+      |> Connection.for_user
       |> Connection.for_provider_name(provider_name)
       |> preload(:provider)
       |> Repo.first
