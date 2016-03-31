@@ -1,39 +1,40 @@
 defmodule Kraken.UserChannel do
   use Phoenix.Channel
 
-  alias Kraken.{Provider,Repo,UpdateConnection}
+  alias Kraken.{Provider,ProviderView,Repo,UpdateConnection}
 
   def join("users:" <> user_id, _auth_msg, socket) do
-    if socket.assigns.current_user.id == user_id do
+    if socket.assigns.user_id == user_id do
       {:ok, socket}
     else
       {:error, %{reason: "unauthorized"}}
     end
   end
 
-  def handle_in("connections:loaded", %{"provider" => provider_name}, socket) do
-    user = socket.assigns.current_user
-    provider = provider_state(provider_name, user)
+  def handle_in(event, params, socket) do
+    user = Repo.get(Kraken.User, socket.assigns.user_id)
+    handle_in(event, params, user, socket)
+  end
 
-    if user && provider do
-      push socket, "connections:update", provider
+  def handle_in("connections:loaded", %{"provider" => provider_name}, user, socket) do
+    provider =
+      Provider
+      |> Provider.for_name(provider_name)
+      |> Provider.status_for_user(user)
+      |> Repo.first
+
+    if provider do
+      payload = %{provder: ProviderView.render("provider.json", %{provder: provider})}
+
+      push socket, "connections:update", payload
     end
 
     {:noreply, socket}
   end
 
-  def handle_in("connections:reconnect", %{"provider" => provider_name}, socket) do
-    user = socket.assigns.current_user
-
+  def handle_in("connections:reconnect", %{"provider" => provider_name}, user, socket) do
     UpdateConnection.call(user, provider_name)
 
     {:noreply, socket}
-  end
-
-  defp provider_state(name, user) do
-    Provider
-    |> Provider.for_name(name)
-    |> Provider.status_for_user(user)
-    |> Repo.first
   end
 end
