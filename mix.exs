@@ -39,6 +39,7 @@ defmodule Kraken.Mixfile do
       :phoenix,
       :phoenix_ecto,
       :phoenix_html,
+      :phoenix_pubsub,
       :postgrex,
       :tzdata,
       :ueberauth,
@@ -62,10 +63,11 @@ defmodule Kraken.Mixfile do
       {:guardian, "~> 0.9.0"},
       {:httpoison, "~> 0.8.1"},
       {:mix_test_watch, "~> 0.2", only: :dev},
-      {:phoenix, "~> 1.1.2"},
-      {:phoenix_ecto, "~> 3.0.0-beta"},
+      {:phoenix, "~> 1.2.0-rc"},
+      {:phoenix_ecto, "~> 3.0-rc"},
       {:phoenix_html, "~> 2.3"},
       {:phoenix_live_reload, "~> 1.0", only: :dev},
+      {:phoenix_pubsub, "~> 1.0.0-rc"},
       {:poison, "~> 1.5.2"},
       {:postgrex, "~> 0.11.1"},
       {:timex, "~> 1.0"},
@@ -84,6 +86,11 @@ defmodule Kraken.Mixfile do
       "ecto.reset": [
         "ecto.drop",
         "ecto.setup"
+      ],
+      "test": [
+        "ecto.create --quiet",
+        "ecto.migrate",
+        "test"
       ]
     ]
   end

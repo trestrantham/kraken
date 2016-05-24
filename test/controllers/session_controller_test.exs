@@ -1,7 +1,7 @@
 defmodule Kraken.SessionControllerTest do
   use Kraken.ConnCase
 
-  test "renders log in form" do
+  test "renders log in form", %{conn: conn} do
     conn = get conn, session_path(conn, :new)
 
     assert html_response(conn, 200) =~ "Log in to Kraken"
@@ -14,7 +14,7 @@ defmodule Kraken.SessionControllerTest do
     assert redirected_to(conn, 302) == dashboard_path(conn, :index)
   end
 
-  test "logs in and redirects" do
+  test "logs in and redirects", %{conn: conn} do
     assert Guardian.Plug.current_resource(conn) == nil
 
     user = insert_user
@@ -25,7 +25,7 @@ defmodule Kraken.SessionControllerTest do
     assert Guardian.Plug.current_resource(conn).id == user.id
   end
 
-  test "does not log in and renders errors when invalid" do
+  test "does not log in and renders errors when invalid", %{conn: conn} do
     login_params = %{session: %{email: "notvalid", password: "short"}}
     conn = post conn, session_path(conn, :create), login_params
 
@@ -43,7 +43,7 @@ defmodule Kraken.SessionControllerTest do
     assert Guardian.Plug.current_resource(conn) == nil
   end
 
-  test "logs user out and redirects" do
+  test "logs user out and redirects", %{conn: conn} do
     assert Guardian.Plug.current_resource(conn) == nil
 
     conn = delete recycle(conn), session_path(conn, :destroy)

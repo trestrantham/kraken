@@ -33,7 +33,7 @@ defmodule Kraken.ConnCase do
       # We need to use the bypass_through to fire the plugs in the router
       # and get the session fetched.
       def guardian_login(user, token \\ :token, opts \\ []) do
-        conn()
+        build_conn
         |> bypass_through(Kraken.Router, [:browser, :browser_auth])
         |> get("/")
         |> Guardian.Plug.sign_in(user, token, opts)
@@ -54,9 +54,13 @@ defmodule Kraken.ConnCase do
     end
   end
 
-  setup do
+  setup tags do
     :ok = Ecto.Adapters.SQL.Sandbox.checkout(Kraken.Repo)
 
-    {:ok, conn: Phoenix.ConnTest.conn()}
+    unless tags[:async] do
+      Ecto.Adapters.SQL.Sandbox.mode(Kraken.Repo, {:shared, self()})
+    end
+
+    {:ok, conn: Phoenix.ConnTest.build_conn()}
   end
 end

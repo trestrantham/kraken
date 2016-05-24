@@ -56,8 +56,4 @@ defmodule Kraken.ConnectionController do
     |> Provider.status_for_user(user)
     |> Repo.all
   end
-
-  defp user_connections(user) do
-    assoc(user, :connections)
-  end
 end

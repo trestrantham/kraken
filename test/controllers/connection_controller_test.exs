@@ -26,7 +26,7 @@ defmodule Kraken.ConnectionControllerTest do
     provider = insert_provider
     insert_connection(user, provider, %{expires_at: Date.now(:secs) + 10000})
 
-    conn = get  conn, connection_path(conn, :index)
+    conn = get conn, connection_path(conn, :index)
 
     assert html_response(conn, 200) =~ ~r/Connections/
     assert String.contains?(conn.resp_body, "connected")
@@ -45,7 +45,7 @@ defmodule Kraken.ConnectionControllerTest do
     # refute String.contains?(conn.resp_body, "connected")
   end
 
-  test "requires authentication on all actions" do
+  test "requires authentication on all actions", %{conn: conn} do
     conn = get conn, connection_path(conn, :index)
 
     assert redirected_to(conn, 401) == session_path(conn, :new)

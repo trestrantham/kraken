@@ -13,8 +13,12 @@ defmodule Kraken.ModelCase do
     end
   end
 
-  setup do
+  setup tags do
     :ok = Ecto.Adapters.SQL.Sandbox.checkout(Kraken.Repo)
+
+    unless tags[:async] do
+      Ecto.Adapters.SQL.Sandbox.mode(Kraken.Repo, {:shared, self()})
+    end
 
     :ok
   end

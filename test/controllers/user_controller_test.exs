@@ -3,7 +3,7 @@ defmodule Kraken.UserControllerTest do
 
   alias Kraken.{Repo,User}
 
-  test "renders registration form" do
+  test "renders registration form", %{conn: conn} do
     conn = get conn, user_path(conn, :new)
 
     assert html_response(conn, 200) =~ "Create an account for Kraken"
@@ -16,7 +16,7 @@ defmodule Kraken.UserControllerTest do
     assert redirected_to(conn, 302) == dashboard_path(conn, :index)
   end
 
-  test "creates user and redirects" do
+  test "creates user and redirects", %{conn: conn} do
     assert Guardian.Plug.current_resource(conn) == nil
 
     register_params = %{user: %{name: "Sven Rivendell", email: "sven@rivendell.com", password: "supersecret"}}
@@ -26,7 +26,7 @@ defmodule Kraken.UserControllerTest do
     assert Repo.get_by!(User, email: register_params.user.email).id == Guardian.Plug.current_resource(conn).id
   end
 
-  test "log in page with invalid params shows error" do
+  test "log in page with invalid params shows error", %{conn: conn} do
     register_params = %{user: %{email: "notvalid", password: "short"}}
     conn = post conn, user_path(conn, :create), register_params
 

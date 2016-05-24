@@ -1,8 +1,6 @@
 defmodule Kraken.UserSocket do
   use Phoenix.Socket
 
-  alias Kraken.{Repo, User}
-
   channel "users:*", Kraken.UserChannel
 
   transport :websocket, Phoenix.Transports.WebSocket
