@@ -19,7 +19,7 @@ defmodule Kraken.RefreshUserData do
 
   def update_connection_tokens(user) do
     for connection <- connections(user) do
-      if connection.expires_at && connection.expires_at < Date.now(:secs) do
+      if Connection.expired?(connection) do
         update_connection(connection)
       end
     end
