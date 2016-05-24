@@ -15,13 +15,13 @@ defmodule Kraken.ConnectionController do
   def index(conn, _params, current_user, _claims) do
     render conn, "index.html",
       current_user: current_user,
-      providers: providers(current_user)
+      providers: user_providers(current_user)
   end
 
   def request(conn, _params, current_user, _claims) do
     render conn, "index.html",
       current_user: current_user,
-      providers: providers(current_user)
+      providers: user_providers(current_user)
   end
 
   def callback(%Plug.Conn{assigns: %{ueberauth_failure: fails}} = conn, _params, current_user, _claims) do
@@ -30,7 +30,7 @@ defmodule Kraken.ConnectionController do
     |> render(
       "index.html",
       current_user: current_user,
-      providers: providers(current_user)
+      providers: user_providers(current_user)
     )
   end
 
@@ -48,12 +48,16 @@ defmodule Kraken.ConnectionController do
 
     render conn, "index.html",
       current_user: current_user,
-      providers: providers(current_user)
+      providers: user_providers(current_user)
   end
 
-  defp providers(user) do
+  defp user_providers(user) do
     Provider
     |> Provider.status_for_user(user)
     |> Repo.all
+  end
+
+  defp user_connections(user) do
+    assoc(user, :connections)
   end
 end
